@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch Full Movie</title>
+    <link href="src/output.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body
+    class="bg-gradient-to-b from-[#0f172a] via-[#0b0f19] to-[#111827] text-white min-h-screen flex flex-col items-center justify-start">
+
+    <!-- Trailer Box -->
+    <div class="w-full flex justify-center">
+        <div id="trailer-container"
+            class="w-full h-[30vh] sm:h-[55vh] md:h-[70vh] overflow-hidden shadow-lg border-b border-cyan-500/30 bg-black relative">
+            <!-- iframe will be injected here -->
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-6 flex flex-wrap justify-center gap-4 px-4 w-full">
+        <a href="index.html"
+            class="flex-1 max-w-[200px] px-4 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white rounded-full font-semibold text-sm text-center hover:scale-105 transition shadow-md">
+            ← Home
+        </a>
+
+        <!-- ✅ This button now correctly uses movie.html -->
+        <a id="desc-btn"
+            class="flex-1 max-w-[200px] px-4 py-3 bg-gradient-to-r from-blue-500 via-cyan-500 to-green-500 text-white rounded-full font-semibold text-sm text-center hover:scale-105 transition shadow-md">
+            Description
+        </a>
+    </div>
+
+    <!-- Streaming Link Section -->
+    <div id="streaming-link" class="mt-6 text-center px-4"></div>
+
+    <script>
+        const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const params = new URLSearchParams(window.location.search);
+        const movieId = params.get('id');
+
+        // Inject correct movieId into description button
+        if (movieId) {
+            document.getElementById("desc-btn").href = `movie.html?id=${movieId}`;
+        }
+
+        // Get Trailer
+        async function getTrailer(movieId) {
+            const res = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`);
+            const data = await res.json();
+            const trailer = data.results.find(v => v.type === "Trailer" && v.site === "YouTube");
+            const container = document.getElementById("trailer-container");
+
+            if (trailer) {
+                container.innerHTML = `
+          <iframe
+            src="https://www.youtube.com/embed/${trailer.key}"
+            frameborder="0"
+            allowfullscreen
+            class="absolute top-0 left-0 w-full h-full">
+          </iframe>`;
+            } else {
+                container.innerHTML = `<p class="text-center text-red-400 p-4">No trailer available.</p>`;
+            }
+        }
+
+        // On page load
+        if (movieId) {
+            getTrailer(movieId);
+            getStreamingLink(movieId);
+        }
+        // // Get Streaming Info (e.g., Netflix, etc.)
+        // async function getStreamingLink(movieId) {
+        //     const res = await fetch(`${BASE_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`);
+        //     const data = await res.json();
+        //     const providers = data.results?.PK?.flatrate || [];
+        //     const linkContainer = document.getElementById("streaming-link");
+
+        //     if (providers.length > 0) {
+        //         const provider = providers[0];
+        //         const providerName = provider.provider_name;
+        //         const watchURL = `https://www.justwatch.com/pk/movie/${movieId}`;
+
+        //         linkContainer.innerHTML = `
+        //   <a href="${watchURL}" target="_blank"
+        //     class="inline-block mt-4 px-6 py-3 bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white rounded-full font-semibold shadow-md hover:scale-105 transition">
+        //     🍿 Watch Full Movie on ${providerName}
+        //   </a>`;
+        //     } else {
+        //         linkContainer.innerHTML = `
+        //   <p class="text-gray-400 text-sm mt-4">Full movie not available for streaming in your region.</p>`;
+        //     }
+        // }
+
+    </script>
+</body>
+
+</html>

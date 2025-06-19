@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Detail</title>
+    <link href="src/output.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            position: relative;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Glowing animated background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -100px;
+            left: -100px;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.08), transparent 70%),
+                radial-gradient(circle at 30% 30%, rgba(0, 255, 150, 0.15), transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(0, 150, 255, 0.1), transparent 60%);
+            z-index: -1;
+            filter: blur(90px);
+            animation: moveBg 30s linear infinite;
+        }
+
+        @keyframes moveBg {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-5%, -5%);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="text-white font-sans p-4 md:p-10 min-h-screen">
+
+    <!-- Movie Info Section -->
+    <div id="movie-detail"
+        class="max-w-6xl mx-auto mb-10 rounded-2xl shadow-xl bg-white/5 backdrop-blur-md p-6 md:p-10 border border-cyan-500">
+    </div>
+
+    <!-- Cast Section -->
+    <div class="max-w-6xl mx-auto">
+        <h2
+            class="text-2xl md:text-3xl font-bold mb-4 border-b border-cyan-400 bg-gradient-to-r from-cyan-400 to-green-400 text-transparent bg-clip-text pb-2">
+            Top Cast
+        </h2>
+        <div id="cast-section" class="flex overflow-x-auto gap-4 pb-4 scrollbar-hide"></div>
+    </div>
+
+    <script>
+        const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const params = new URLSearchParams(window.location.search);
+        const movieId = params.get("id");
+
+        async function getMovieDetails(id) {
+            const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+            const movie = await res.json();
+
+            const poster = movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : 'https://via.placeholder.com/300x450?text=No+Image';
+
+            const detailHTML = `
+        <div class="flex flex-col md:flex-row gap-8 items-center">
+          <img src="${poster}" alt="${movie.title}" class="w-full md:w-72 rounded-xl shadow-md border border-cyan-400" />
+          <div class="flex-1 space-y-4">
+            <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-green-400 text-transparent bg-clip-text">${movie.title}</h1>
+            <p><span class="text-cyan-300 font-medium">Release Date:</span> ${movie.release_date || "N/A"}</p>
+            <p><span class="text-cyan-300 font-medium">Rating:</span> ${movie.vote_average || "N/A"}</p>
+            <p><span class="text-cyan-300 font-medium">Language:</span> ${movie.original_language.toUpperCase()}</p>
+            <p class="text-gray-300 leading-relaxed">${movie.overview || "No description available."}</p>
+            <a href="index.html" class="min-w-[150px] inline-block mt-4 sm:mr-[20px] px-5 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-green-400 text-sm font-semibold text-black hover:brightness-110 transition">
+              ← Back to Search
+            </a>
+            <a href="watch.html" class="min-w-[150px] text-center inline-block mt-4 px-5 py-2 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white text-sm font-semibold text-black hover:brightness-110 transition">
+              Wtach trailer
+            </a>
+          </div>
+        </div>
+      `;
+
+            document.getElementById("movie-detail").innerHTML = detailHTML;
+        }
+
+        async function getMovieCast(id) {
+            const res = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`);
+            const data = await res.json();
+            const cast = data.cast.slice(0, 15);
+
+            const castHTML = cast.map(actor => {
+                const profile = actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                    : 'https://via.placeholder.com/150x225?text=No+Image';
+
+                return `
+          <div class="flex-shrink-0 w-[120px] bg-white/5 backdrop-blur-md border border-cyan-500 rounded-xl p-2 text-center">
+            <img src="${profile}" alt="${actor.name}" class="w-full h-[160px] object-cover rounded-lg mb-2" />
+            <p class="text-sm font-semibold truncate text-cyan-100">${actor.name}</p>
+            <p class="text-xs text-gray-400 truncate">${actor.character}</p>
+          </div>
+        `;
+            }).join("");
+
+            document.getElementById("cast-section").innerHTML = castHTML;
+        }
+
+        if (movieId) {
+            getMovieDetails(movieId);
+            getMovieCast(movieId);
+        } else {
+            document.getElementById('movie-detail').innerHTML = `<p class="text-red-500">Movie not found.</p>`;
+        }
+    </script>
+
+</body>
+
+</html>

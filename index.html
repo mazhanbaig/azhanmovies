@@ -1,167 +1,167 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="src/output.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="src/output.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <title>AZHAN Movies</title>
 </head>
 
-<body class="font-sans">
+<body class="font-sans bg-white text-black">
     <!-- Navbar -->
-    <nav class="bg-white/40 backdrop-blur-md text-white sticky top-0 left-0 w-full z-50 shadow-md">
+    <nav class="bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[80px] flex items-center justify-between">
-            <!-- Desktop Layout -->
-            <div class="hidden md:flex w-full items-center justify-between">
-                <h1 class="text-2xl sm:text-3xl font-bold tracking-wide w-fit">
-                    <span
-                        class="bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text drop-shadow-md">
-                        AZHAN
-                    </span>
-                </h1>
-                <div class="flex justify-center flex-1">
-                    <input
-                        class="bg-black text-white px-3 py-1 rounded-3xl border-2 border-white outline-none h-[50px] w-full md:max-w-[450px] lg:max-w-[550px]"
-                        type="search" placeholder="Search" name="search" id="search" />
-                </div>
-                <div class="w-fit flex justify-end space-x-6">
-                    <a href="index.html"
-                        class="hover:underline hover:scale-105 underline-offset-4 transition text-black">Home</a>
-                    <a href="contact.html" class="hover:underline underline-offset-4 transition text-black">Contact</a>
-                </div>
+            <!-- Logo -->
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-wide text-white">
+                <span
+                    class="bg-gradient-to-r from-white via-white to-white text-transparent bg-clip-text drop-shadow-md">
+                    AZHAN
+                </span>
+            </h1>
+
+            <!-- Desktop Search -->
+            <div class="hidden md:flex flex-1 justify-center">
+                <input id="search" type="search" placeholder="Search"
+                    class="w-full max-w-[500px] px-5 py-2 rounded-full bg-white text-black border border-cyan-600 placeholder-cyan-600 outline-none focus:ring-2 focus:ring-cyan-300 transition shadow" />
             </div>
 
-            <!-- Mobile Layout -->
-            <div class="md:hidden w-full flex items-center justify-between">
-                <h1 class="text-2xl font-bold tracking-wide mr-[20px]">
-                    <span
-                        class="bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text">AZHAN</span>
-                </h1>
-                <div class="flex justify-center flex-1">
-                    <input
-                        class="bg-black text-white px-3 py-1 rounded-3xl border-2 border-white outline-none h-[40px] w-full md:max-w-[450px] lg:max-w-[550px]"
-                        type="search" placeholder="Search" name="search" id="search-mobile" />
-                </div>
-                <button id="menu-toggle" class="focus:outline-none text-2xl w-[50px] h-[50px] text-black">
-                    <i class="fas fa-bars"></i>
-                </button>
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-white hover:text-cyan-100 font-medium transition">Home</a>
+                <a href="contact.html" class="text-white hover:text-cyan-100 font-medium transition">Contact</a>
             </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-toggle" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu"
-            class="md:hidden hidden  bg-black text-white w-[100px] h-fit flex-col space-y-4 py-4 px-3 absolute top-[80px] right-4 z-50 shadow-lg rounded-lg">
-            <a href="index.html" class="block hover:underline">Home</a>
-            <a href="contact.html" class="block hover:underline">Contact</a>
+        <div class="md:hidden hidden bg-cyan-700 px-4 py-3" id="mobile-menu">
+            <input id="search-mobile" type="search" placeholder="Search"
+                class="w-full mb-3 px-4 py-2 rounded-full bg-white text-black border border-cyan-500 placeholder-cyan-500 focus:ring-2 focus:ring-cyan-300 outline-none shadow" />
+            <a href="index.html" class="block text-white py-2 hover:text-cyan-100 font-medium">Home</a>
+            <a href="contact.html" class="block text-white py-2 hover:text-cyan-100 font-medium">Contact</a>
         </div>
     </nav>
-    <!-- ended  -->
-    <!-- ended  -->
-    <!-- types section   -->
-    <!-- Types Section - Vibrant & Futuristic -->
+
+    <!-- Category Buttons -->
     <div
-        class="w-full flex flex-wrap justify-center items-center gap-3 px-4 py-5 bg-[#0e0e10] shadow-[0_0_10px_#6b21a8] border-t border-purple-800/40">
+        class="w-full flex flex-wrap justify-center items-center gap-3 px-4 py-5 bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 z-40">
         <button data-category="All"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-br from-[#6b21a8] to-[#9333ea] shadow-md hover:shadow-purple-500/60 transition-all duration-300 hover:scale-105">
+            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-cyan-400 to-cyan-600 hover:scale-105 hover:shadow-xl transition">
             All
         </button>
+
         <button data-category="Hollywood"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-br from-[#3b82f6] to-[#6366f1] shadow-md hover:shadow-blue-400/60 transition-all duration-300 hover:scale-105">
+            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 hover:scale-105 hover:shadow-xl transition">
             Hollywood
         </button>
+
         <button data-category="Bollywood"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-br from-[#f97316] to-[#f43f5e] shadow-md hover:shadow-orange-400/60 transition-all duration-300 hover:scale-105">
+            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 hover:scale-105 hover:shadow-xl transition">
             Bollywood
         </button>
+
         <button data-category="Pakistani"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-br from-[#22c55e] to-[#10b981] shadow-md hover:shadow-green-400/60 transition-all duration-300 hover:scale-105">
+            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-green-400 to-teal-500 hover:scale-105 hover:shadow-xl transition">
             Pakistani
         </button>
+
         <button data-category="Anime"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-br from-[#eab308] to-[#f59e0b] shadow-md hover:shadow-yellow-400/60 transition-all duration-300 hover:scale-105">
+            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 hover:shadow-xl transition">
             Anime
         </button>
+
         <button data-category="Other"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-br from-[#eab308] to-[#f59e0b] shadow-md hover:shadow-yellow-400/60 transition-all duration-300 hover:scale-105">
-            Anime
+            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-slate-500 to-gray-700 hover:scale-105 hover:shadow-xl transition">
+            Other
         </button>
     </div>
 
-    <!-- Movie Section -->
-    <div class="wrapper bg-black/90 w-full h-[100%] pb-[50px]">
-        <h1 class="text-4xl sm:text-5xl md:text-7xl text-white font-semibold pt-[50px] text-center">
+
+    <!-- Movie Container -->
+    <div class="wrapper w-full pb-20 bg-gradient-to-br from-cyan-100 via-white to-cyan-100">
+        <!-- Title -->
+        <h1
+            class="text-4xl sm:text-5xl md:text-6xl font-extrabold pt-16 mb-6 text-center bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-400 text-transparent bg-clip-text drop-shadow-xl">
             Films
         </h1>
+
+        <!-- Movies Grid -->
         <div id="movie-container"
-            class="grid gap-y-8 gap-x-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-4 mt-12 w-full">
-            <!-- Movies injected by JS -->
+            class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-4 sm:px-6 md:px-8 py-6">
         </div>
 
-
-        <!-- No Results Message -->
+        <!-- No Results -->
         <p id="no-results"
-            class="mb-[20px] bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text text-center text-xl mt-10 hidden">
+            class="text-xl mt-12 mb-10 hidden text-center bg-gradient-to-r from-purple-500 to-blue-600 text-transparent bg-clip-text drop-shadow-md">
             No match found
         </p>
     </div>
 
+
     <!-- Footer -->
-    <footer class="bg-black text-white py-10 px-6 mt-auto">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer class="bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 text-white py-12 px-6 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
             <!-- About -->
             <div>
-                <h2 class="text-xl font-semibold mb-3">AZHAN Movies</h2>
-                <p class="text-sm text-gray-400">
-                    Your daily dose of entertainment. Stream the best movies right here, anytime, anywhere.
+                <h2 class="text-2xl font-bold mb-4 text-white drop-shadow-sm">AZHAN Movies</h2>
+                <p class="text-md text-cyan-100 leading-relaxed">
+                    Your daily dose of entertainment.<br>Stream the best movies right here,<br>anytime, anywhere.
                 </p>
             </div>
 
             <!-- Links -->
             <div>
-                <h2 class="text-lg font-semibold mb-3">Quick Links</h2>
-                <ul class="space-y-2 text-sm text-gray-300">
-                    <li><a href="index.html" class="hover:underline">Home</a></li>
-                    <li><a href="#" class="hover:underline">Contact</a></li>
-                    <li><a href="#" class="hover:underline">Support</a></li>
-                    <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+                <h2 class="text-lg font-semibold mb-4 text-white">Quick Links</h2>
+                <ul class="space-y-2 text-md text-cyan-100">
+                    <li><a href="index.html" class="hover:text-black transition duration-200">Home</a></li>
+                    <li><a href="#" class="hover:text-black transition duration-200">Contact</a></li>
+                    <li><a href="#" class="hover:text-black transition duration-200">Support</a></li>
+                    <li><a href="#" class="hover:text-black transition duration-200">Privacy Policy</a></li>
                 </ul>
             </div>
 
             <!-- Newsletter -->
             <div>
-                <h2 class="text-lg font-semibold mb-3">Newsletter</h2>
-                <form class="flex flex-col space-y-2">
+                <h2 class="text-lg font-semibold mb-4 text-white">Newsletter</h2>
+                <form class="flex flex-col space-y-3">
                     <input type="email" placeholder="Your email"
-                        class="px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 outline-none focus:ring-2 focus:ring-cyan-500" />
+                        class="px-4 py-2 rounded-md bg-white text-black placeholder-cyan-600 border border-cyan-400 focus:outline-none focus:ring-2 focus:ring-white" />
                     <button
-                        class="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition">
+                        class="bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 text-white font-semibold px-4 py-2 rounded-md hover:shadow-lg transition">
                         Subscribe
                     </button>
                 </form>
             </div>
 
-            <!-- Socials -->
+            <!-- Social -->
             <div>
-                <h2 class="text-lg font-semibold mb-3">Follow Us</h2>
-                <div class="flex space-x-4 text-xl">
-                    <a href="#" class="hover:text-blue-500"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="hover:text-pink-500"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-red-500"><i class="fab fa-youtube"></i></a>
+                <h2 class="text-lg font-semibold mb-4 text-white">Follow Us</h2>
+                <div class="flex space-x-5 text-2xl">
+                    <a href="#" class="hover:text-blue-200 transition"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-pink-300 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-cyan-300 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-red-400 transition"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
+
         </div>
 
-        <div class="mt-10 text-center text-sm text-gray-500 border-t border-gray-700 pt-4">
-            &copy; 2025 AZHAN Movies. All rights reserved.
+        <!-- Bottom Bar -->
+        <div class="mt-10 text-center text-sm text-cyan-100 pt-6 border-t border-cyan-300/30">
+            &copy; 2025 <span class="font-semibold text-white">AZHAN Movies</span>. All rights reserved.
         </div>
     </footer>
 
 
-    <!-- Scripts -->
+    <!-- Script -->
     <script src="app.js"></script>
 </body>
 
