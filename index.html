@@ -1,167 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="src/output.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>AZHAN Movies - Futuristic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <title>AZHAN Movies</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .neon {
+            background-image: linear-gradient(to right, #00e0ff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
 
-<body class="font-sans bg-white text-black">
+<body class="text-white font-sans tracking-wide">
+
     <!-- Navbar -->
-    <nav class="bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 sticky top-0 z-50 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[80px] flex items-center justify-between">
-            <!-- Logo -->
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-wide text-white">
-                <span
-                    class="bg-gradient-to-r from-white via-white to-white text-transparent bg-clip-text drop-shadow-md">
-                    AZHAN
-                </span>
-            </h1>
-
-            <!-- Desktop Search -->
+    <nav class="glass sticky top-0 z-50 w-full shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
+            <h1 class="text-3xl font-extrabold neon">AZHAN Movies</h1>
             <div class="hidden md:flex flex-1 justify-center">
-                <input id="search" type="search" placeholder="Search"
-                    class="w-full max-w-[500px] px-5 py-2 rounded-full bg-white text-black border border-cyan-600 placeholder-cyan-600 outline-none focus:ring-2 focus:ring-cyan-300 transition shadow" />
+                <input id="search" type="search" placeholder="Search..."
+                    class="w-full max-w-lg px-5 py-2 rounded-full bg-[#1e1e1e] text-white border border-violet-500 placeholder-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500" />
             </div>
-
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="text-white hover:text-cyan-100 font-medium transition">Home</a>
-                <a href="contact.html" class="text-white hover:text-cyan-100 font-medium transition">Contact</a>
-            </div>
-
-            <!-- Mobile Menu Toggle -->
-            <button id="menu-toggle" class="md:hidden text-white text-2xl">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button id="menu-toggle" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
         </div>
 
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden bg-cyan-700 px-4 py-3" id="mobile-menu">
-            <input id="search-mobile" type="search" placeholder="Search"
-                class="w-full mb-3 px-4 py-2 rounded-full bg-white text-black border border-cyan-500 placeholder-cyan-500 focus:ring-2 focus:ring-cyan-300 outline-none shadow" />
-            <a href="index.html" class="block text-white py-2 hover:text-cyan-100 font-medium">Home</a>
-            <a href="contact.html" class="block text-white py-2 hover:text-cyan-100 font-medium">Contact</a>
+        <!-- Mobile Search -->
+        <div id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+            <input id="search-mobile" type="search" placeholder="Search..."
+                class="w-full px-4 py-2 rounded-full bg-[#1e1e1e] text-white border border-cyan-500 placeholder-cyan-400" />
         </div>
     </nav>
 
-    <!-- Category Buttons -->
-    <div
-        class="w-full flex flex-wrap justify-center items-center gap-3 px-4 py-5 bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 z-40">
-        <button data-category="All"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-cyan-400 to-cyan-600 hover:scale-105 hover:shadow-xl transition">
-            All
-        </button>
+    <!-- Title -->
+    <h1 class="text-center text-5xl md:text-6xl font-extrabold neon mt-10 mb-8">Explore</h1>
 
-        <button data-category="Hollywood"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 hover:scale-105 hover:shadow-xl transition">
-            Hollywood
-        </button>
-
-        <button data-category="Bollywood"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 hover:scale-105 hover:shadow-xl transition">
-            Bollywood
-        </button>
-
-        <button data-category="Pakistani"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-green-400 to-teal-500 hover:scale-105 hover:shadow-xl transition">
-            Pakistani
-        </button>
-
-        <button data-category="Anime"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 hover:shadow-xl transition">
-            Anime
-        </button>
-
-        <button data-category="Other"
-            class="category-btn px-5 py-2 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-slate-500 to-gray-700 hover:scale-105 hover:shadow-xl transition">
-            Other
-        </button>
-    </div>
-
-
-    <!-- Movie Container -->
-    <div class="wrapper w-full pb-20 bg-gradient-to-br from-cyan-100 via-white to-cyan-100">
-        <!-- Title -->
-        <h1
-            class="text-4xl sm:text-5xl md:text-6xl font-extrabold pt-16 mb-6 text-center bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-400 text-transparent bg-clip-text drop-shadow-xl">
-            Films
-        </h1>
-
-        <!-- Movies Grid -->
-        <div id="movie-container"
-            class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-4 sm:px-6 md:px-8 py-6">
+    <!-- Search Results -->
+    <div id="search-section" class="hidden px-4 md:px-10 pb-12">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 text-cyan-300">Search Results</h2>
+        <div id="search-results"
+            class="flex md:grid md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible scrollbar-hide snap-x snap-mandatory">
         </div>
 
-        <!-- No Results -->
-        <p id="no-results"
-            class="text-xl mt-12 mb-10 hidden text-center bg-gradient-to-r from-purple-500 to-blue-600 text-transparent bg-clip-text drop-shadow-md">
-            No match found
-        </p>
+        <p id="no-results" class="text-center text-xl text-cyan-400 mt-10 hidden">No match found.</p>
     </div>
 
+    <!-- Popular Section -->
+    <section id="popular-section" class="px-4 md:px-10 mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 text-cyan-400">🔥 Popular Movies</h2>
+        <div id="popular-container" class="flex gap-5 overflow-x-auto scrollbar-hide"></div>
+    </section>
+
+    <!-- Newest Section -->
+    <section id="newest-section" class="px-4 md:px-10 mb-24">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 text-violet-400">🆕 Newest Movies</h2>
+        <div id="newest-container" class="flex gap-5 overflow-x-auto scrollbar-hide"></div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 text-white py-12 px-6 mt-auto">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-            <!-- About -->
-            <div>
-                <h2 class="text-2xl font-bold mb-4 text-white drop-shadow-sm">AZHAN Movies</h2>
-                <p class="text-md text-cyan-100 leading-relaxed">
-                    Your daily dose of entertainment.<br>Stream the best movies right here,<br>anytime, anywhere.
-                </p>
-            </div>
-
-            <!-- Links -->
-            <div>
-                <h2 class="text-lg font-semibold mb-4 text-white">Quick Links</h2>
-                <ul class="space-y-2 text-md text-cyan-100">
-                    <li><a href="index.html" class="hover:text-black transition duration-200">Home</a></li>
-                    <li><a href="#" class="hover:text-black transition duration-200">Contact</a></li>
-                    <li><a href="#" class="hover:text-black transition duration-200">Support</a></li>
-                    <li><a href="#" class="hover:text-black transition duration-200">Privacy Policy</a></li>
-                </ul>
-            </div>
-
-            <!-- Newsletter -->
-            <div>
-                <h2 class="text-lg font-semibold mb-4 text-white">Newsletter</h2>
-                <form class="flex flex-col space-y-3">
-                    <input type="email" placeholder="Your email"
-                        class="px-4 py-2 rounded-md bg-white text-black placeholder-cyan-600 border border-cyan-400 focus:outline-none focus:ring-2 focus:ring-white" />
-                    <button
-                        class="bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 text-white font-semibold px-4 py-2 rounded-md hover:shadow-lg transition">
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-
-            <!-- Social -->
-            <div>
-                <h2 class="text-lg font-semibold mb-4 text-white">Follow Us</h2>
-                <div class="flex space-x-5 text-2xl">
-                    <a href="#" class="hover:text-blue-200 transition"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="hover:text-pink-300 transition"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="hover:text-cyan-300 transition"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-red-400 transition"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-
+    <footer class="glass text-center py-8 mt-auto border-t border-cyan-800">
+        <h2 class="text-2xl font-bold neon mb-2">AZHAN Movies</h2>
+        <p class="text-sm text-gray-400 mb-2">Your gateway to entertainment. Watch anywhere, anytime.</p>
+        <div class="flex justify-center gap-6 text-xl text-cyan-300 mb-4">
+            <a href="#"><i class="fab fa-facebook hover:text-white transition"></i></a>
+            <a href="#"><i class="fab fa-instagram hover:text-white transition"></i></a>
+            <a href="#"><i class="fab fa-twitter hover:text-white transition"></i></a>
+            <a href="#"><i class="fab fa-youtube hover:text-white transition"></i></a>
         </div>
-
-        <!-- Bottom Bar -->
-        <div class="mt-10 text-center text-sm text-cyan-100 pt-6 border-t border-cyan-300/30">
-            &copy; 2025 <span class="font-semibold text-white">AZHAN Movies</span>. All rights reserved.
-        </div>
+        <p class="text-sm text-gray-500">&copy; 2025 <span class="text-white font-semibold">AZHAN Movies</span>. All
+            rights reserved.</p>
     </footer>
 
-
-    <!-- Script -->
     <script src="app.js"></script>
 </body>
 
