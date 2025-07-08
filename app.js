@@ -123,7 +123,6 @@
 // });
 
 
-
 const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
@@ -133,7 +132,7 @@ const searchResults = document.getElementById('search-results');
 const noResults = document.getElementById('no-results');
 const homepageSections = document.getElementById('homepage-sections');
 
-// Genre Buttons
+// Genre map
 const genresMap = {
   28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy',
   80: 'Crime', 99: 'Documentary', 18: 'Drama', 10751: 'Family',
@@ -142,6 +141,7 @@ const genresMap = {
   10770: 'TV Movie', 53: 'Thriller', 10752: 'War', 37: 'Western'
 };
 
+// Render genre buttons
 function renderGenreButtons() {
   const genreBox = document.getElementById('genre-buttons');
   genreBox.innerHTML = '';
@@ -161,6 +161,7 @@ function renderGenreButtons() {
   }
 }
 
+// Make movie card
 function makeMovieCard(movie) {
   const poster = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -205,6 +206,7 @@ function makeMovieCard(movie) {
   return card;
 }
 
+// Load homepage sections
 async function loadSection(containerId, endpoint) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
@@ -219,6 +221,7 @@ async function loadSection(containerId, endpoint) {
   }
 }
 
+// Search and group by language
 async function searchMovies(query) {
   if (!query) {
     searchSection.classList.add('hidden');
@@ -240,16 +243,52 @@ async function searchMovies(query) {
       return;
     }
 
+    const groups = {
+      en: [], hi: [], ur: [], ja: [], other: []
+    };
+
     data.results.forEach(movie => {
-      const card = makeMovieCard(movie);
-      searchResults.appendChild(card);
+      const lang = movie.original_language;
+      if (lang === 'en') groups.en.push(movie);
+      else if (lang === 'hi') groups.hi.push(movie);
+      else if (lang === 'ur') groups.ur.push(movie);
+      else if (lang === 'ja') groups.ja.push(movie);
+      else groups.other.push(movie);
     });
+
+    const langLabels = {
+      en: '🎬 Hollywood Movies',
+      hi: '🎬 Bollywood Movies',
+      ur: '🎬 Pakistani Movies',
+      ja: '🎬 Anime',
+      other: '🎬 Other Languages'
+    };
+
+    for (const lang in groups) {
+      if (groups[lang].length > 0) {
+        const title = document.createElement('h3');
+        title.textContent = langLabels[lang];
+        title.className = 'text-xl font-bold text-pink-400 mb-2';
+        searchResults.appendChild(title);
+
+        const container = document.createElement('div');
+        container.className = 'flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory';
+
+        groups[lang].forEach(movie => {
+          const card = makeMovieCard(movie);
+          container.appendChild(card);
+        });
+
+        searchResults.appendChild(container);
+      }
+    }
 
   } catch (err) {
     console.error("Search error", err);
   }
 }
 
+// Theme functions
 function applySavedTheme() {
   if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-mode');
@@ -262,7 +301,7 @@ function toggleTheme() {
   localStorage.setItem("theme", isLight ? "light" : "dark");
 }
 
-// Event Listeners
+// Event listeners
 searchInputs.forEach(input => {
   input?.addEventListener('input', (e) => {
     searchMovies(e.target.value.trim());
@@ -279,13 +318,13 @@ document.addEventListener('click', e => {
   }
 });
 
-document.getElementById("menu-toggle").addEventListener("click", () => {
-  document.getElementById("dropdown-menu").classList.toggle("hidden");
+document.getElementById("menu-toggle")?.addEventListener("click", () => {
+  document.getElementById("dropdown-menu")?.classList.toggle("hidden");
 });
 
 document.getElementById("mode-toggle")?.addEventListener("click", toggleTheme);
 
-// On Page Load
+// On page load
 window.addEventListener("DOMContentLoaded", () => {
   applySavedTheme();
   renderGenreButtons();
