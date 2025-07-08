@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Detail</title>
+    <title>AZHAN Movie | Detail</title>
     <link href="src/output.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body {
-            background-color: #0f172a;
-            position: relative;
+            background: linear-gradient(145deg, #020617, #0f172a);
         }
 
         .scrollbar-hide::-webkit-scrollbar {
@@ -22,53 +21,53 @@
             scrollbar-width: none;
         }
 
-        /* Glowing animated background */
         body::before {
             content: "";
             position: fixed;
-            top: -100px;
-            left: -100px;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.08), transparent 70%),
-                radial-gradient(circle at 30% 30%, rgba(0, 255, 150, 0.15), transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(0, 150, 255, 0.1), transparent 60%);
+            inset: 0;
             z-index: -1;
-            filter: blur(90px);
-            animation: moveBg 30s linear infinite;
+            background: radial-gradient(circle at 30% 20%, rgba(0, 255, 255, 0.05), transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 150, 0.05), transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.05), transparent 70%);
+            animation: bgmove 30s infinite linear;
         }
 
-        @keyframes moveBg {
+        @keyframes bgmove {
             0% {
                 transform: translate(0, 0);
             }
 
             50% {
-                transform: translate(-5%, -5%);
+                transform: translate(-2%, -2%);
             }
 
             100% {
                 transform: translate(0, 0);
             }
         }
+
+        .neon {
+            background-image: linear-gradient(to right, #00e0ff, #ff00c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 
-<body class="text-white font-sans p-4 md:p-10 min-h-screen">
-
+<body class="font-sans min-h-screen p-4 md:p-6 text-white">
     <!-- Movie Info Section -->
-    <div id="movie-detail"
-        class="max-w-6xl mx-auto mb-10 rounded-2xl shadow-xl bg-white/5 backdrop-blur-md p-6 md:p-10 border border-cyan-500">
-    </div>
+    <section id="movie-detail"
+        class="w-full max-w-screen-lg mx-auto bg-[#0f172a]/80 backdrop-blur-xl border border-cyan-400/10 shadow-xl rounded-2xl p-4 md:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 md:gap-8 items-start mb-10">
+    </section>
 
     <!-- Cast Section -->
-    <div class="max-w-6xl mx-auto">
+    <section class="max-w-screen-lg mx-auto">
         <h2
-            class="text-2xl md:text-3xl font-bold mb-4 border-b border-cyan-400 bg-gradient-to-r from-cyan-400 to-green-400 text-transparent bg-clip-text pb-2">
+            class="text-xl md:text-2xl font-bold mb-4 bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-transparent bg-clip-text">
             Top Cast
         </h2>
-        <div id="cast-section" class="flex overflow-x-auto gap-4 pb-4 scrollbar-hide"></div>
-    </div>
+        <div id="cast-section" class="flex overflow-x-auto gap-3 pb-3 scrollbar-hide"></div>
+    </section>
 
     <script>
         const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
@@ -84,26 +83,46 @@
                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                 : 'https://via.placeholder.com/300x450?text=No+Image';
 
-            const detailHTML = `
-        <div class="flex flex-col md:flex-row gap-8 items-center">
-          <img src="${poster}" alt="${movie.title}" class="w-full md:w-72 rounded-xl shadow-md border border-cyan-400" />
-          <div class="flex-1 space-y-4">
-            <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-green-400 text-transparent bg-clip-text">${movie.title}</h1>
-            <p><span class="text-cyan-300 font-medium">Release Date:</span> ${movie.release_date || "N/A"}</p>
-            <p><span class="text-cyan-300 font-medium">Rating:</span> ${movie.vote_average || "N/A"}</p>
-            <p><span class="text-cyan-300 font-medium">Language:</span> ${movie.original_language.toUpperCase()}</p>
-            <p class="text-gray-300 leading-relaxed">${movie.overview || "No description available."}</p>
-            <a href="index.html" class="min-w-[150px] inline-block mt-4 sm:mr-[20px] px-5 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-green-400 text-sm font-semibold text-black hover:brightness-110 transition">
-              ← Back to Search
+            const genres = movie.genres.map(g =>
+                `<span class="bg-cyan-500/10 border border-cyan-400/20 px-3 py-1 rounded-full text-[10px] font-medium">${g.name}</span>`
+            ).join(' ');
+
+            const html = `
+        <!-- Poster -->
+        <div class="w-full max-w-xs mx-auto md:mx-0">
+          <img src="${poster}" alt="${movie.title}" class="rounded-xl w-full border border-cyan-500/10 shadow" />
+        </div>
+
+        <!-- Details -->
+        <div class="space-y-4 text-sm max-w-prose">
+          <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-transparent bg-clip-text">
+            ${movie.title}
+          </h1>
+
+          <p class="text-gray-300 leading-snug">${movie.overview || "No description available."}</p>
+
+          <div class="flex flex-wrap gap-2 mt-1">${genres}</div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-gray-400 pt-2">
+            <div><span class="text-cyan-400">Release:</span> ${movie.release_date || "N/A"}</div>
+            <div><span class="text-cyan-400">Rating:</span> ⭐ ${movie.vote_average || "N/A"}</div>
+            <div><span class="text-cyan-400">Language:</span> ${movie.original_language.toUpperCase()}</div>
+          </div>
+
+          <div class="flex flex-wrap gap-3 pt-4">
+            <a href="index.html"
+              class="px-6 py-2 text-sm font-semibold rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white shadow hover:scale-105 transition">
+              ← Back to Home
             </a>
-            <a href="watch.html" class="min-w-[150px] text-center inline-block mt-4 px-5 py-2 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white text-sm font-semibold text-black hover:brightness-110 transition">
-              Wtach trailer
+            <a href="watch.html?id=${movie.id}"
+              class="px-6 py-2 text-sm font-semibold rounded-full bg-gradient-to-r from-blue-500 via-cyan-400 to-green-500 text-white shadow hover:scale-105 transition">
+              Watch Trailer
             </a>
           </div>
         </div>
       `;
 
-            document.getElementById("movie-detail").innerHTML = detailHTML;
+            document.getElementById("movie-detail").innerHTML = html;
         }
 
         async function getMovieCast(id) {
@@ -117,13 +136,13 @@
                     : 'https://via.placeholder.com/150x225?text=No+Image';
 
                 return `
-          <div class="flex-shrink-0 w-[120px] bg-white/5 backdrop-blur-md border border-cyan-500 rounded-xl p-2 text-center">
-            <img src="${profile}" alt="${actor.name}" class="w-full h-[160px] object-cover rounded-lg mb-2" />
-            <p class="text-sm font-semibold truncate text-cyan-100">${actor.name}</p>
-            <p class="text-xs text-gray-400 truncate">${actor.character}</p>
+          <div class="flex-shrink-0 w-[90px] bg-[#1e293b]/40 backdrop-blur-md rounded-lg p-2 text-center border border-cyan-500/10 hover:shadow-cyan-500/10 transition shadow">
+            <img src="${profile}" alt="${actor.name}" class="rounded-md w-full h-[130px] object-cover mb-1 border border-cyan-400/10" />
+            <p class="text-[11px] font-medium text-cyan-100 truncate">${actor.name}</p>
+            <p class="text-[10px] text-gray-400 truncate">${actor.character}</p>
           </div>
         `;
-            }).join("");
+            }).join('');
 
             document.getElementById("cast-section").innerHTML = castHTML;
         }
@@ -132,10 +151,9 @@
             getMovieDetails(movieId);
             getMovieCast(movieId);
         } else {
-            document.getElementById('movie-detail').innerHTML = `<p class="text-red-500">Movie not found.</p>`;
+            document.getElementById("movie-detail").innerHTML = `<p class="text-red-500">Movie not found.</p>`;
         }
     </script>
-
 </body>
 
 </html>

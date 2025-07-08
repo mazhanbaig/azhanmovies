@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | AZHAN Movies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+            color: white;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .neon {
+            background-image: linear-gradient(to right, #00e0ff, #ff00c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-mode {
+            background: #f0f0f0;
+            color: #111;
+        }
+
+        body.light-mode .glass {
+            background: rgba(0, 0, 0, 0.06);
+            color: black;
+        }
+
+        body.light-mode .text-white {
+            color: black !important;
+        }
+    </style>
+</head>
+
+<body class="text-white font-sans">
+
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 w-full shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
+            <a href="index.html" class="text-3xl font-extrabold neon">AZHAN Movies</a>
+            <div class="flex gap-6 items-center">
+                <h2 class="text-xl font-semibold text-cyan-400">Settings</h2>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="px-6 py-10 max-w-3xl mx-auto">
+        <div class="glass p-6 rounded-xl">
+            <h1 class="text-2xl font-bold mb-4 text-pink-400">Settings</h1>
+            <div class="space-y-6">
+                <!-- Dark Mode Toggle -->
+                <div class="flex items-center justify-between">
+                    <span class="text-lg">Toggle Dark / Light Mode</span>
+                    <button id="mode-toggle"
+                        class="text-white bg-gradient-to-r from-fuchsia-600 to-pink-500 px-4 py-2 rounded-full hover:brightness-110 transition">
+                        Toggle Mode
+                    </button>
+                </div>
+
+                <!-- Favorites -->
+                <div class="flex items-center justify-between">
+                    <span class="text-lg">Go to Favorites</span>
+                    <a href="favorites.html"
+                        class="bg-gradient-to-r from-yellow-400 to-orange-500 px-4 py-2 rounded-full text-white font-semibold hover:brightness-110 transition">
+                        Open Favorites
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Theme Script -->
+    <script>
+        function toggleTheme() {
+            if (document.body.classList.contains("light-mode")) {
+                document.body.classList.remove("light-mode");
+                localStorage.setItem("theme", "dark");
+            } else {
+                document.body.classList.add("light-mode");
+                localStorage.setItem("theme", "light");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") {
+                document.body.classList.add("light-mode");
+            }
+            document.getElementById("mode-toggle").addEventListener("click", toggleTheme);
+        });
+    </script>
+</body>
+
+</html>

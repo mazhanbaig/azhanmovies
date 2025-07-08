@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites | AZHAN Movies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+            color: white;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .neon {
+            background-image: linear-gradient(to right, #00e0ff, #ff00c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-mode {
+            background: #f0f0f0;
+            color: #111;
+        }
+
+        body.light-mode .glass {
+            background: rgba(0, 0, 0, 0.06);
+            color: black;
+        }
+
+        body.light-mode .text-white {
+            color: black !important;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="text-white font-sans">
+
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 w-full shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
+            <a href="index.html" class="text-3xl font-extrabold neon">AZHAN Movies</a>
+            <div class="flex items-center gap-4">
+                <h2 class="text-xl font-semibold text-pink-400">Favorites</h2>
+                <a href="settings.html" class="text-xl hover:text-cyan-400 transition" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Favorite Movies -->
+    <main class="px-6 py-10">
+        <h3 class="text-2xl font-bold mb-6 text-pink-400">Your Favorite Movies</h3>
+        <div id="favorite-container" class="flex overflow-x-auto gap-4 scrollbar-hide"></div>
+        <p id="no-favorites" class="text-center text-gray-400 mt-10 hidden">No favorite movies yet.</p>
+    </main>
+
+    <script>
+        const container = document.getElementById('favorite-container');
+        const noFav = document.getElementById('no-favorites');
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        function renderFavorites() {
+            container.innerHTML = "";
+            if (favorites.length === 0) {
+                noFav.classList.remove('hidden');
+                return;
+            } else {
+                noFav.classList.add('hidden');
+            }
+
+            favorites.forEach((movie, index) => {
+                const poster = movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+                    : 'https://via.placeholder.com/300x300?text=No+Image';
+
+                const card = document.createElement('div');
+                card.className = `glass w-[200px] flex-shrink-0 rounded-xl overflow-hidden hover:scale-105 transition`;
+
+                card.innerHTML = `
+          <img src="${poster}" alt="${movie.title}" class="w-full h-[220px] object-cover" />
+          <div class="p-3 flex flex-col gap-2 text-center">
+            <h2 class="text-sm font-bold text-pink-400 truncate">${movie.title}</h2>
+            <div class="text-xs text-gray-400">${movie.release_date || 'No date'} • ⭐ ${movie.vote_average}</div>
+            <div class="flex flex-col gap-1">
+              <button class="detail-btn py-1 bg-gradient-to-r from-fuchsia-600 to-pink-500 rounded-full text-xs">Details</button>
+              <button class="watch-now-btn py-1 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full text-xs">Watch</button>
+              <button class="remove-btn mt-1 py-1 bg-red-600 hover:bg-red-700 rounded-full text-xs">Unfavorite</button>
+            </div>
+          </div>
+        `;
+
+                card.querySelector('.remove-btn').addEventListener('click', () => {
+                    favorites.splice(index, 1);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    renderFavorites();
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        renderFavorites();
+
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+        }
+    </script>
+</body>
+
+</html>
