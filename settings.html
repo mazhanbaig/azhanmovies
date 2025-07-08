@@ -45,27 +45,29 @@
 <body class="text-white font-sans">
 
     <!-- Navbar -->
-    <nav class="glass sticky top-0 z-50 w-full shadow-lg">
+    <nav class="glass sticky top-0 z-50 w-full shadow-md">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
-            <a href="index.html" class="text-3xl font-extrabold neon">AZHAN Movies</a>
-            <h2 class="text-xl font-semibold text-cyan-400">Settings</h2>
+            <a href="index.html" class="text-2xl font-extrabold neon">AZHAN Movies</a>
+            <h2 class="text-lg text-cyan-400">Settings</h2>
         </div>
     </nav>
 
-    <!-- Main -->
+    <!-- Main Content -->
     <main class="px-6 py-10 max-w-3xl mx-auto">
         <div class="glass p-6 rounded-xl">
             <h1 class="text-2xl font-bold mb-4 text-pink-400">Settings</h1>
 
             <div class="space-y-6">
+                <!-- Theme Toggle -->
                 <div class="flex items-center justify-between">
                     <span class="text-lg">Toggle Dark / Light Mode</span>
-                    <button id="mode-toggle-duplicate"
+                    <button id="mode-toggle"
                         class="text-white bg-gradient-to-r from-fuchsia-600 to-pink-500 px-4 py-2 rounded-full hover:brightness-110 transition">
                         Toggle Mode
                     </button>
                 </div>
 
+                <!-- Favorites -->
                 <div class="flex items-center justify-between">
                     <span class="text-lg">Go to Favorites</span>
                     <a href="favorites.html"
@@ -89,11 +91,11 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const savedTheme = localStorage.getItem("theme");
-            if (savedTheme === "light") {
+            const saved = localStorage.getItem("theme");
+            if (saved === "light") {
                 document.body.classList.add("light-mode");
             }
-            document.getElementById("mode-toggle-duplicate").addEventListener("click", toggleTheme);
+            document.getElementById("mode-toggle").addEventListener("click", toggleTheme);
         });
     </script>
 </body>

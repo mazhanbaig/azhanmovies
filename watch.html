@@ -38,7 +38,7 @@
         }
 
         .neon {
-            background-image: linear-gradient(to right, #00e0ff, #8a2be2);
+            background-image: linear-gradient(to right, #00e0ff, #ff00c8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -48,10 +48,64 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
+
+        /* 🌗 Light Mode Styles */
+        body.light-mode {
+            background: #f9f9f9 !important;
+            color: #111 !important;
+        }
+
+        body.light-mode::before {
+            background: none !important;
+        }
+
+        body.light-mode .text-white,
+        body.light-mode .text-gray-300,
+        body.light-mode .text-gray-400,
+        body.light-mode .text-gray-500 {
+            color: #111 !important;
+        }
+
+        body.light-mode .bg-black,
+        body.light-mode .bg-zinc-800,
+        body.light-mode .glass {
+            background-color: #ffffff !important;
+            color: #000 !important;
+            border-color: #ccc !important;
+        }
+
+        body.light-mode footer {
+            background: #e5e5e5 !important;
+            color: #000 !important;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #fff;
+            color: #000;
+            border-color: #999;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: #000;
+            color: white;
+            border: 1px solid #00e0ff;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body class="text-white font-sans flex flex-col min-h-screen">
+
+    <!-- 🌗 Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌗 Toggle Theme</button>
 
     <!-- Navbar -->
     <nav class="glass sticky top-0 z-50 w-full shadow-lg">
@@ -59,15 +113,14 @@
             <a href="index.html" class="text-3xl font-extrabold neon">AZHAN Movies</a>
         </div>
     </nav>
+
     <!-- Main Content -->
     <main class="flex-grow flex flex-col items-center px-4 py-10">
 
         <!-- Trailer Section -->
         <section
             class="w-full max-w-5xl aspect-video overflow-hidden rounded-2xl border border-cyan-400/20 shadow-lg bg-black relative mb-10">
-            <div id="trailer-container" class="absolute inset-0">
-                <!-- Trailer iframe injected here -->
-            </div>
+            <div id="trailer-container" class="absolute inset-0"></div>
         </section>
 
         <!-- Action Buttons -->
@@ -84,7 +137,6 @@
 
         <!-- Streaming Info -->
         <div id="streaming-link" class="text-center text-gray-300 text-sm max-w-xl mb-10"></div>
-
     </main>
 
     <!-- Footer -->
@@ -103,10 +155,10 @@
             <div>
                 <h2 class="text-lg font-semibold mb-4 text-white">Quick Links</h2>
                 <ul class="space-y-2 text-md text-gray-400">
-                    <li><a href="index.html" class="hover:text-white transition duration-200">Home</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-200">Contact</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-200">Support</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-200">Privacy Policy</a></li>
+                    <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                    <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    <li><a href="#" class="hover:text-white transition">Support</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
                 </ul>
             </div>
 
@@ -133,16 +185,14 @@
                     <a href="#" class="hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-
         </div>
 
-        <!-- Bottom Bar -->
         <div class="mt-10 text-center text-sm text-gray-500 pt-6 border-t border-gray-700">
             &copy; 2025 <span class="font-semibold text-white">AZHAN Movies</span>. All rights reserved.
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JS -->
     <script>
         const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
         const BASE_URL = 'https://api.themoviedb.org/3';
@@ -163,12 +213,11 @@
 
             if (trailer) {
                 container.innerHTML = `
-          <iframe
-            src="https://www.youtube.com/embed/${trailer.key}"
-            frameborder="0"
-            allowfullscreen
-            class="w-full h-full">
-          </iframe>`;
+        <iframe
+          src="https://www.youtube.com/embed/${trailer.key}"
+          frameborder="0"
+          allowfullscreen
+          class="w-full h-full"></iframe>`;
             } else {
                 container.innerHTML = `<div class="flex items-center justify-center h-full text-red-400 font-semibold">No trailer available.</div>`;
             }
@@ -184,19 +233,26 @@
                 const providerName = providers[0].provider_name;
                 const watchURL = `https://www.justwatch.com/pk/movie/${movieId}`;
                 container.innerHTML = `
-          <a href="${watchURL}" target="_blank"
-            class="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-purple-600 text-white font-semibold shadow-md hover:scale-105 transition">
-            🍿 Watch Full Movie on ${providerName}
-          </a>`;
+        <a href="${watchURL}" target="_blank"
+          class="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-purple-600 text-white font-semibold shadow-md hover:scale-105 transition">
+          🍿 Watch Full Movie on ${providerName}
+        </a>`;
             } else {
                 container.innerHTML = `<p class="mt-4 text-gray-500">Streaming not available in your region.</p>`;
             }
         }
 
-        // Mobile menu toggle
-        document.getElementById("menu-toggle")?.addEventListener("click", () => {
-            const menu = document.getElementById("mobile-menu");
-            menu.classList.toggle("hidden");
+        // 🌗 Theme toggle
+        function toggleTheme() {
+            const isLight = document.body.classList.toggle("light-mode");
+            localStorage.setItem("theme", isLight ? "light" : "dark");
+        }
+
+        // Restore theme from localStorage
+        window.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("theme") === "light") {
+                document.body.classList.add("light-mode");
+            }
         });
     </script>
 </body>

@@ -124,29 +124,16 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-// Get elements
 const searchInputs = [document.getElementById('search'), document.getElementById('search-mobile')];
 const searchSection = document.getElementById('search-section');
 const searchResults = document.getElementById('search-results');
 const noResults = document.getElementById('no-results');
 const homepageSections = document.getElementById('homepage-sections');
 
-// Genre map
+// Genre Buttons
 const genresMap = {
   28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy',
   80: 'Crime', 99: 'Documentary', 18: 'Drama', 10751: 'Family',
@@ -155,7 +142,6 @@ const genresMap = {
   10770: 'TV Movie', 53: 'Thriller', 10752: 'War', 37: 'Western'
 };
 
-// Render genre buttons
 function renderGenreButtons() {
   const genreBox = document.getElementById('genre-buttons');
   genreBox.innerHTML = '';
@@ -175,16 +161,6 @@ function renderGenreButtons() {
   }
 }
 
-// Language to Category
-function getCategory(lang) {
-  if (lang === 'en') return 'Hollywood';
-  if (lang === 'hi') return 'Bollywood';
-  if (lang === 'ur') return 'Pakistani';
-  if (lang === 'ja') return 'Anime';
-  return 'Other';
-}
-
-// Movie card UI
 function makeMovieCard(movie) {
   const poster = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -229,26 +205,20 @@ function makeMovieCard(movie) {
   return card;
 }
 
-// Load category section
 async function loadSection(containerId, endpoint) {
-  const box = document.getElementById(containerId);
-  box.innerHTML = '';
-
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
   try {
     const res = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}`);
     const data = await res.json();
-    const movies = data.results.slice(0, 10);
-
-    movies.forEach(movie => {
-      const card = makeMovieCard(movie);
-      box.appendChild(card);
+    data.results.slice(0, 10).forEach(movie => {
+      container.appendChild(makeMovieCard(movie));
     });
-  } catch (error) {
-    console.error("Error loading section", error);
+  } catch (e) {
+    console.error("Error loading", endpoint, e);
   }
 }
 
-// Search
 async function searchMovies(query) {
   if (!query) {
     searchSection.classList.add('hidden');
@@ -270,69 +240,26 @@ async function searchMovies(query) {
       return;
     }
 
-    const grouped = {};
     data.results.forEach(movie => {
-      const category = getCategory(movie.original_language);
-      if (!grouped[category]) grouped[category] = [];
-      grouped[category].push(movie);
+      const card = makeMovieCard(movie);
+      searchResults.appendChild(card);
     });
 
-    for (let cat in grouped) {
-      const section = document.createElement('div');
-      section.className = 'mb-10';
-      section.innerHTML = `<h3 class="text-xl font-bold mb-3 text-pink-400">${cat}</h3>`;
-
-      const row = document.createElement('div');
-      row.className = 'flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory';
-
-      grouped[cat].forEach(movie => {
-        const card = makeMovieCard(movie);
-        row.appendChild(card);
-      });
-
-      section.appendChild(row);
-      searchResults.appendChild(section);
-    }
   } catch (err) {
-    console.error("Search error:", err);
+    console.error("Search error", err);
   }
 }
 
-// Filter genre
-function filterMoviesByGenre(genreId) {
-  const cards = document.querySelectorAll('.glass[data-genres]');
-  cards.forEach(card => {
-    const genres = card.getAttribute('data-genres')?.split(',') || [];
-    const show = genreId === 'all' || genres.includes(genreId);
-    card.style.display = show ? 'block' : 'none';
-  });
-}
-
-// Theme switch
 function applySavedTheme() {
-  const icon = document.querySelector('#mode-toggle i');
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
+  if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-mode');
-    icon.classList.remove('fa-moon');
-    icon.classList.add('fa-sun');
   }
 }
 
 function toggleTheme() {
-  const icon = document.querySelector('#mode-toggle i');
-  const isLight = document.body.classList.contains('light-mode');
-  if (isLight) {
-    document.body.classList.remove('light-mode');
-    localStorage.setItem("theme", "dark");
-    icon.classList.remove('fa-sun');
-    icon.classList.add('fa-moon');
-  } else {
-    document.body.classList.add('light-mode');
-    localStorage.setItem("theme", "light");
-    icon.classList.remove('fa-moon');
-    icon.classList.add('fa-sun');
-  }
+  document.body.classList.toggle("light-mode");
+  const isLight = document.body.classList.contains("light-mode");
+  localStorage.setItem("theme", isLight ? "light" : "dark");
 }
 
 // Event Listeners
@@ -345,23 +272,25 @@ searchInputs.forEach(input => {
 document.addEventListener('click', e => {
   if (e.target.classList.contains('genre-btn')) {
     const genreId = e.target.getAttribute('data-genre');
-    filterMoviesByGenre(genreId);
+    document.querySelectorAll('.glass[data-genres]').forEach(card => {
+      const genres = card.getAttribute('data-genres')?.split(',') || [];
+      card.style.display = genreId === 'all' || genres.includes(genreId) ? 'block' : 'none';
+    });
   }
+});
+
+document.getElementById("menu-toggle").addEventListener("click", () => {
+  document.getElementById("dropdown-menu").classList.toggle("hidden");
 });
 
 document.getElementById("mode-toggle")?.addEventListener("click", toggleTheme);
 
-document.getElementById("menu-toggle")?.addEventListener("click", () => {
-  document.getElementById("mobile-menu")?.classList.toggle("hidden");
-});
-
-// On Load
-window.addEventListener('DOMContentLoaded', () => {
+// On Page Load
+window.addEventListener("DOMContentLoaded", () => {
   applySavedTheme();
   renderGenreButtons();
   loadSection('trending-container', '/trending/movie/week');
   loadSection('popular-container', '/movie/popular');
   loadSection('toprated-container', '/movie/top_rated');
-  loadSection('newest-container', '/movie/now_playing');
   loadSection('upcoming-container', '/movie/upcoming');
 });
