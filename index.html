@@ -7,6 +7,7 @@
     <title>AZHAN Movies | Watch Anytime</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
         body {
             background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
@@ -63,37 +64,27 @@
 
 <body class="text-white font-sans">
 
-    <!-- Navbar -->
+    <!-- ✅ Responsive Navbar -->
     <nav class="glass sticky top-0 z-50 w-full shadow-lg">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 h-20">
-            <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold neon whitespace-nowrap">AZHAN Movies</h1>
+        <div class="max-w-7xl mx-auto flex items-center gap-3 px-4 py-3 md:px-6 md:py-5">
+            <!-- Logo -->
+            <a href="index.html" class="text-lg sm:text-2xl md:text-3xl font-extrabold neon whitespace-nowrap">
+                AZHAN Movies
+            </a>
 
-            <!-- Search Bar Mobile -->
-            <input id="search-mobile" type="search" placeholder="Search..."
-                class="md:hidden flex-1 mx-3 px-4 py-2 rounded-full bg-black text-white border border-pink-400 placeholder-pink-400" />
+            <!-- Search Bar -->
+            <input id="search" type="search" placeholder="Search..."
+                class="flex-1 min-w-0 px-4 py-2 rounded-full bg-black text-white border border-pink-500 placeholder-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-600" />
 
-            <!-- Mobile Menu Button -->
-            <button id="menu-toggle" class="md:hidden text-2xl text-white"><i class="fas fa-bars"></i></button>
-
-            <!-- Desktop Search and Settings -->
-            <div class="hidden md:flex flex-1 justify-center gap-4">
-                <input id="search" type="search" placeholder="Search..."
-                    class="w-full max-w-lg px-5 py-2 rounded-full bg-black text-white border border-pink-500 placeholder-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-600" />
-                <a href="settings.html" class="ml-4 text-xl hover:text-cyan-400 transition" title="Settings">
-                    <i class="fas fa-cog"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="md:hidden hidden px-4 pb-4">
-            <a href="settings.html" class="block text-xl hover:text-cyan-400 transition mt-2">
-                <i class="fas fa-cog mr-2"></i> Settings
+            <!-- Settings Icon -->
+            <a href="settings.html" class="text-xl sm:text-2xl hover:text-cyan-400 transition ml-2" title="Settings">
+                <i class="fas fa-bars"></i>
             </a>
         </div>
     </nav>
 
-    <!-- Genre Buttons -->
+
+    <!-- Genre Buttons Placeholder -->
     <div class="px-4 md:px-10 mt-6 flex flex-wrap gap-4 justify-center" id="genre-buttons"></div>
 
     <!-- Search Section -->
@@ -164,15 +155,6 @@
         <div class="text-center text-sm text-gray-600 mt-10">&copy; 2025 AZHAN Movies. All rights reserved.</div>
     </footer>
 
-    <!-- Menu toggle -->
-    <script>
-        document.getElementById("menu-toggle").addEventListener("click", () => {
-            const menu = document.getElementById("mobile-menu");
-            menu.classList.toggle("hidden");
-        });
-    </script>
-
-    <!-- Your JS -->
     <script src="app.js"></script>
 </body>
 

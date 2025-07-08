@@ -7,6 +7,7 @@
     <title>Settings | AZHAN Movies</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
         body {
             background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
@@ -47,9 +48,7 @@
     <nav class="glass sticky top-0 z-50 w-full shadow-lg">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
             <a href="index.html" class="text-3xl font-extrabold neon">AZHAN Movies</a>
-            <div class="flex gap-6 items-center">
-                <h2 class="text-xl font-semibold text-cyan-400">Settings</h2>
-            </div>
+            <h2 class="text-xl font-semibold text-cyan-400">Settings</h2>
         </div>
     </nav>
 
@@ -57,17 +56,16 @@
     <main class="px-6 py-10 max-w-3xl mx-auto">
         <div class="glass p-6 rounded-xl">
             <h1 class="text-2xl font-bold mb-4 text-pink-400">Settings</h1>
+
             <div class="space-y-6">
-                <!-- Dark Mode Toggle -->
                 <div class="flex items-center justify-between">
                     <span class="text-lg">Toggle Dark / Light Mode</span>
-                    <button id="mode-toggle"
+                    <button id="mode-toggle-duplicate"
                         class="text-white bg-gradient-to-r from-fuchsia-600 to-pink-500 px-4 py-2 rounded-full hover:brightness-110 transition">
                         Toggle Mode
                     </button>
                 </div>
 
-                <!-- Favorites -->
                 <div class="flex items-center justify-between">
                     <span class="text-lg">Go to Favorites</span>
                     <a href="favorites.html"
@@ -79,7 +77,6 @@
         </div>
     </main>
 
-    <!-- Theme Script -->
     <script>
         function toggleTheme() {
             if (document.body.classList.contains("light-mode")) {
@@ -96,7 +93,7 @@
             if (savedTheme === "light") {
                 document.body.classList.add("light-mode");
             }
-            document.getElementById("mode-toggle").addEventListener("click", toggleTheme);
+            document.getElementById("mode-toggle-duplicate").addEventListener("click", toggleTheme);
         });
     </script>
 </body>
