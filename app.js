@@ -331,5 +331,6 @@ window.addEventListener("DOMContentLoaded", () => {
   loadSection('trending-container', '/trending/movie/week');
   loadSection('popular-container', '/movie/popular');
   loadSection('toprated-container', '/movie/top_rated');
+  loadSection('newest-container', '/movie/now_playing'); // 🆕 Add this
   loadSection('upcoming-container', '/movie/upcoming');
 });
