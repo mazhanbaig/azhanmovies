@@ -129,7 +129,14 @@
     </nav>
 
     <!-- Genre Buttons -->
-    <div class="px-4 md:px-10 mt-6 flex flex-wrap gap-4 justify-center" id="genre-buttons"></div>
+    <!-- Genre Dropdown -->
+    <div class="px-4 md:px-10 mt-6">
+        <select id="genre-select"
+            class="px-4 py-2 rounded-full bg-black text-white border border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-600">
+            <option value="all">All Genres</option>
+            <!-- JS will populate the rest -->
+        </select>
+    </div>
 
     <!-- Search Results -->
     <section id="search-section" class="hidden px-4 md:px-10 py-8">

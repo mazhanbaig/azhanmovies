@@ -1,182 +1,74 @@
-// const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
-// const BASE_URL = 'https://api.themoviedb.org/3';
+// My API key and base URL for TMDB
+const API_KEY = "63f568ca8b3bbb806284ff9e018bee43";
+const BASE_URL = "https://api.themoviedb.org/3";
 
-// const movieContainer = document.getElementById('movie-container');
-// const noResults = document.getElementById('no-results');
-// const categoryButtons = document.querySelectorAll('.category-btn');
+// Getting important HTML elements from the page
+const searchInputs = [
+  document.getElementById("search"),
+  document.getElementById("search-mobile"),
+];
+const searchSection = document.getElementById("search-section");
+const searchResults = document.getElementById("search-results");
+const noResults = document.getElementById("no-results");
+const homepageSections = document.getElementById("homepage-sections");
 
-// // Language map
-// function mapLanguageToCategory(lang) { //2 second
-//   switch (lang) {
-//     case 'en': return 'Hollywood';
-//     case 'hi': return 'Bollywood';
-//     case 'ur': return 'Pakistani';
-//     case 'ja': return 'Anime';
-//     default: return 'Other';
-//   }
-// }
-
-// // Add Movies (search or popular)
-// async function addMovies(searchVal = "", isPopular = false) {
-//   const url = isPopular
-//     ? `${BASE_URL}/movie/popular?api_key=${API_KEY}`
-//     : `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchVal)}`;
-
-//   const response = await fetch(url);
-//   const data = await response.json();
-//   const movies = data.results;
-
-//   movieContainer.innerHTML = '';
-
-//   if (!movies || movies.length === 0) {
-//     noResults.classList.remove('hidden');
-//     return;
-//   } else {
-//     noResults.classList.add('hidden');
-//   }
-
-//   movies.forEach(movie => {
-//     const poster = movie.poster_path
-//       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-//       : 'https://via.placeholder.com/300x450?text=No+Image';
-
-//     const category = mapLanguageToCategory(movie.original_language); //1 first
-//     const movieBox = document.createElement('div');
-//     movieBox.setAttribute('data-category', category);
-//     movieBox.className = `
-//       movie-box group flex flex-col bg-white/100 rounded-xl overflow-hidden
-//       border border-blue-400 shadow-md hover:shadow-purple-500/40
-//       transition-all duration-300 hover:scale-105 w-full
-//     `;
-
-//     movieBox.innerHTML = `
-//       <div class="w-full h-[200px] sm:h-[220px] md:h-[250px] overflow-hidden">
-//         <img src="${poster}" alt="${movie.title}" class="w-full h-full object-cover" />
-//       </div>
-//       <div class="flex flex-col gap-2 px-3 py-3 text-black">
-//         <h1 class="text-base sm:text-lg font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 text-transparent bg-clip-text text-center">${movie.title}</h1>
-//         <p class="text-xs sm:text-sm text-gray-800 text-center">${movie.release_date || "No release date"}</p>
-//         <p class="text-xs sm:text-sm text-gray-800 text-center">Rating: ${movie.vote_average}</p>
-//         <p class="text-xs sm:text-sm text-gray-800 text-center">${movie.overview.slice(0, 100)}...</p>
-//         <button class="detail-btn w-full mt-1 px-3 py-2 bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 text-white rounded-full text-xs sm:text-sm font-semibold transition duration-300 hidden group-hover:block hover:brightness-110 self-center">View more detail</button>
-//         <button class="watch-now-btn w-full mt-1 px-3 py-2 bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 text-white rounded-full text-xs sm:text-sm font-semibold transition duration-300 hidden group-hover:block hover:brightness-110 self-center">Watch Now</button>
-//       </div>
-//     `;
-
-//     movieContainer.appendChild(movieBox);
-
-//     // ✅ Correct way to attach event to button in current movie box
-//     const detailBtn = movieBox.querySelector('.detail-btn');
-//     detailBtn.addEventListener('click', () => {
-//       window.location.href = `movie.html?id=${movie.id}`;
-//     });
-//     const watchBtn = movieBox.querySelector('.watch-now-btn');
-//     watchBtn.addEventListener('click', () => {
-//     window.location.href = `watch.html?id=${movie.id}`;
-//     });
-
-//   });
-// }
-
-// // Filter by category 4 forth one and the last one 
-// function filterMoviesByCategory(category) {
-//   const allMovies = document.querySelectorAll('.movie-box');
-//   allMovies.forEach(movie => {
-//     const movieCategory = movie.getAttribute('data-category');
-//     const match = category === "All" || movieCategory === category;
-//     movie.style.display = match ? 'flex' : 'none';
-//   });
-// }
-
-// // Category buttons
-// categoryButtons.forEach(btn => { //3 third
-//   btn.addEventListener('click', () => {
-//     const selected = btn.getAttribute('data-category');
-//     filterMoviesByCategory(selected);
-//   });
-// });
-
-// // Search input
-// const searchInputs = [document.getElementById('search'), document.getElementById('search-mobile')];
-// searchInputs.forEach(input => {
-//   if (input) {
-//     input.addEventListener('input', (e) => {
-//       const searchVal = e.target.value.trim();
-//       if (searchVal.length >= 2) {
-//         addMovies(searchVal);
-//       } else {
-//         addMovies("", true); // Show popular
-//       }
-//     });
-//   }
-// });
-
-// // Load popular movies on page load
-// window.addEventListener('DOMContentLoaded', () => {
-//   addMovies("", true);
-// });
-
-// // Toggle mobile menu
-// document.getElementById("menu-toggle").addEventListener("click", () => {
-//   const menu = document.getElementById("mobile-menu");
-//   menu.classList.toggle("hidden");
-// });
-
-
-const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
-const BASE_URL = 'https://api.themoviedb.org/3';
-
-const searchInputs = [document.getElementById('search'), document.getElementById('search-mobile')];
-const searchSection = document.getElementById('search-section');
-const searchResults = document.getElementById('search-results');
-const noResults = document.getElementById('no-results');
-const homepageSections = document.getElementById('homepage-sections');
-
-// Genre map
+// All genre IDs mapped to names, I’ll use these for filter buttons
 const genresMap = {
-  28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy',
-  80: 'Crime', 99: 'Documentary', 18: 'Drama', 10751: 'Family',
-  14: 'Fantasy', 36: 'History', 27: 'Horror', 10402: 'Music',
-  9648: 'Mystery', 10749: 'Romance', 878: 'Science Fiction',
-  10770: 'TV Movie', 53: 'Thriller', 10752: 'War', 37: 'Western'
+  28: "Action",
+  12: "Adventure",
+  16: "Animation",
+  35: "Comedy",
+  80: "Crime",
+  99: "Documentary",
+  18: "Drama",
+  10751: "Family",
+  14: "Fantasy",
+  36: "History",
+  27: "Horror",
+  10402: "Music",
+  9648: "Mystery",
+  10749: "Romance",
+  878: "Science Fiction",
+  10770: "TV Movie",
+  53: "Thriller",
+  10752: "War",
+  37: "Western",
 };
 
-// Render genre buttons
-function renderGenreButtons() {
-  const genreBox = document.getElementById('genre-buttons');
-  genreBox.innerHTML = '';
-
-  const allBtn = document.createElement('button');
-  allBtn.textContent = "All";
-  allBtn.setAttribute('data-genre', 'all');
-  allBtn.className = 'genre-btn px-3 py-2 rounded-full bg-gradient-to-r from-gray-700 to-gray-900 hover:from-pink-500 hover:to-purple-500 text-white text-sm';
-  genreBox.appendChild(allBtn);
+// Making genre buttons show up
+function renderGenreDropdown() {
+  const genreSelect = document.getElementById("genre-select");
+  genreSelect.innerHTML = '<option value="all">All Genres</option>'; // default
 
   for (let id in genresMap) {
-    const btn = document.createElement('button');
-    btn.textContent = genresMap[id];
-    btn.setAttribute('data-genre', id);
-    btn.className = allBtn.className;
-    genreBox.appendChild(btn);
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = genresMap[id];
+    genreSelect.appendChild(option);
   }
 }
 
-// Make movie card
+// Creating movie card for each movie
 function makeMovieCard(movie) {
   const poster = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : 'https://via.placeholder.com/300x450?text=No+Image';
+    : "https://via.placeholder.com/300x450?text=No+Image";
 
-  const card = document.createElement('div');
-  card.className = 'glass w-[250px] min-w-[250px] rounded-xl overflow-hidden transition hover:scale-105 snap-center flex-shrink-0';
-  card.setAttribute('data-genres', movie.genre_ids?.join(',') || '');
+  const card = document.createElement("div");
+  card.className =
+    "glass w-[250px] min-w-[250px] rounded-xl overflow-hidden transition hover:scale-105 snap-center flex-shrink-0";
+  card.setAttribute("data-genres", movie.genre_ids?.join(",") || "");
 
   card.innerHTML = `
-    <img src="${poster}" alt="${movie.title}" class="w-full h-[370px] object-cover" />
+    <img src="${poster}" alt="${
+    movie.title
+  }" class="w-full h-[370px] object-cover" />
     <div class="p-4 flex flex-col gap-2 text-white">
-      <h2 class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text">${movie.title}</h2>
+      <h2 class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text">${
+        movie.title
+      }</h2>
       <div class="text-sm flex justify-between text-gray-400">
-        <span>${movie.release_date || 'No date'}</span>
+        <span>${movie.release_date || "No date"}</span>
         <span>⭐ ${movie.vote_average}</span>
       </div>
       <div class="flex gap-2 mt-2">
@@ -187,33 +79,41 @@ function makeMovieCard(movie) {
     </div>
   `;
 
-  card.querySelector('.detail-btn').addEventListener('click', () => {
+  // Click on detail will go to detail page
+  card.querySelector(".detail-btn").addEventListener("click", () => {
     window.location.href = `movie.html?id=${movie.id}`;
   });
 
-  card.querySelector('.watch-now-btn').addEventListener('click', () => {
+  // Click on watch goes to watch.html
+  card.querySelector(".watch-now-btn").addEventListener("click", () => {
     window.location.href = `watch.html?id=${movie.id}`;
   });
 
-  card.querySelector('.add-fav-btn').addEventListener('click', () => {
-    const favs = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (!favs.some(f => f.id === movie.id)) {
-      favs.push(movie);
-      localStorage.setItem('favorites', JSON.stringify(favs));
+  // Add to favorites, saves in localStorage
+  card.querySelector(".add-fav-btn").addEventListener("click", () => {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    let alreadyAdded = favorites.some((fav) => fav.id === movie.id);
+
+    if (!alreadyAdded) {
+      favorites.push(movie);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      alert("❤️ Added to favorites!");
+    } else {
+      alert("✅ Already in favorites!");
     }
   });
 
   return card;
 }
 
-// Load homepage sections
+// Load a specific section like trending, popular etc
 async function loadSection(containerId, endpoint) {
   const container = document.getElementById(containerId);
-  container.innerHTML = '';
+  container.innerHTML = "";
   try {
     const res = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}`);
     const data = await res.json();
-    data.results.slice(0, 10).forEach(movie => {
+    data.results.slice(0, 20).forEach((movie) => {
       container.appendChild(makeMovieCard(movie));
     });
   } catch (e) {
@@ -221,60 +121,65 @@ async function loadSection(containerId, endpoint) {
   }
 }
 
-// Search and group by language
+// Search movies and group them by language
 async function searchMovies(query) {
   if (!query) {
-    searchSection.classList.add('hidden');
-    homepageSections.classList.remove('hidden');
+    searchSection.classList.add("hidden");
+    homepageSections.classList.remove("hidden");
     return;
   }
 
   try {
-    const res = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+    const res = await fetch(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+        query
+      )}`
+    );
     const data = await res.json();
 
-    searchResults.innerHTML = '';
-    noResults.classList.add('hidden');
-    searchSection.classList.remove('hidden');
-    homepageSections.classList.add('hidden');
+    searchResults.innerHTML = "";
+    noResults.classList.add("hidden");
+    searchSection.classList.remove("hidden");
+    homepageSections.classList.add("hidden");
 
     if (!data.results || data.results.length === 0) {
-      noResults.classList.remove('hidden');
+      noResults.classList.remove("hidden");
       return;
     }
 
-    const groups = {
-      en: [], hi: [], ur: [], ja: [], other: []
-    };
+    // Group movies by language
+    const groups = { en: [], hi: [], ur: [], ja: [], other: [] };
 
-    data.results.forEach(movie => {
+    data.results.forEach((movie) => {
       const lang = movie.original_language;
-      if (lang === 'en') groups.en.push(movie);
-      else if (lang === 'hi') groups.hi.push(movie);
-      else if (lang === 'ur') groups.ur.push(movie);
-      else if (lang === 'ja') groups.ja.push(movie);
+      if (lang === "en") groups.en.push(movie);
+      else if (lang === "hi") groups.hi.push(movie);
+      else if (lang === "ur") groups.ur.push(movie);
+      else if (lang === "ja") groups.ja.push(movie);
       else groups.other.push(movie);
     });
 
     const langLabels = {
-      en: '🎬 Hollywood Movies',
-      hi: '🎬 Bollywood Movies',
-      ur: '🎬 Pakistani Movies',
-      ja: '🎬 Anime',
-      other: '🎬 Other Languages'
+      en: "🎬 Hollywood Movies",
+      hi: "🎬 Bollywood Movies",
+      ur: "🎬 Pakistani Movies",
+      ja: "🎬 Anime",
+      other: "🎬 Other Languages",
     };
 
+    // Create section per language
     for (const lang in groups) {
       if (groups[lang].length > 0) {
-        const title = document.createElement('h3');
+        const title = document.createElement("h3");
         title.textContent = langLabels[lang];
-        title.className = 'text-xl font-bold text-pink-400 mb-2';
+        title.className = "text-xl font-bold text-pink-400 mb-2";
         searchResults.appendChild(title);
 
-        const container = document.createElement('div');
-        container.className = 'flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory';
+        const container = document.createElement("div");
+        container.className =
+          "flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory";
 
-        groups[lang].forEach(movie => {
+        groups[lang].forEach((movie) => {
           const card = makeMovieCard(movie);
           container.appendChild(card);
         });
@@ -282,55 +187,59 @@ async function searchMovies(query) {
         searchResults.appendChild(container);
       }
     }
-
   } catch (err) {
     console.error("Search error", err);
   }
 }
 
-// Theme functions
+// Apply saved theme (dark or light)
 function applySavedTheme() {
-  if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light-mode');
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light-mode");
   }
 }
 
+// Toggle between light and dark theme
 function toggleTheme() {
   document.body.classList.toggle("light-mode");
   const isLight = document.body.classList.contains("light-mode");
   localStorage.setItem("theme", isLight ? "light" : "dark");
 }
 
-// Event listeners
-searchInputs.forEach(input => {
-  input?.addEventListener('input', (e) => {
+// Event listener for search inputs
+searchInputs.forEach((input) => {
+  input?.addEventListener("input", (e) => {
     searchMovies(e.target.value.trim());
   });
 });
 
-document.addEventListener('click', e => {
-  if (e.target.classList.contains('genre-btn')) {
-    const genreId = e.target.getAttribute('data-genre');
-    document.querySelectorAll('.glass[data-genres]').forEach(card => {
-      const genres = card.getAttribute('data-genres')?.split(',') || [];
-      card.style.display = genreId === 'all' || genres.includes(genreId) ? 'block' : 'none';
-    });
-  }
+// Genre filter logic
+document.getElementById("genre-select")?.addEventListener("change", (e) => {
+  const selectedGenre = e.target.value;
+  document.querySelectorAll(".glass[data-genres]").forEach((card) => {
+    const genres = card.getAttribute("data-genres")?.split(",") || [];
+    card.style.display =
+      selectedGenre === "all" || genres.includes(selectedGenre)
+        ? "block"
+        : "none";
+  });
 });
 
+// For mobile menu toggle
 document.getElementById("menu-toggle")?.addEventListener("click", () => {
-  document.getElementById("dropdown-menu")?.classList.toggle("hidden");
+  document.getElementById("dropdown-menu").classList.toggle("hidden");
 });
 
+// For dark/light mode button
 document.getElementById("mode-toggle")?.addEventListener("click", toggleTheme);
 
-// On page load
+// Run everything when page loads
 window.addEventListener("DOMContentLoaded", () => {
   applySavedTheme();
-  renderGenreButtons();
-  loadSection('trending-container', '/trending/movie/week');
-  loadSection('popular-container', '/movie/popular');
-  loadSection('toprated-container', '/movie/top_rated');
-  loadSection('newest-container', '/movie/now_playing'); // 🆕 Add this
-  loadSection('upcoming-container', '/movie/upcoming');
+  renderGenreDropdown();
+  loadSection("trending-container", "/trending/movie/week");
+  loadSection("popular-container", "/movie/popular");
+  loadSection("toprated-container", "/movie/top_rated");
+  loadSection("newest-container", "/movie/now_playing");
+  loadSection("upcoming-container", "/movie/upcoming");
 });
