@@ -1,45 +1,30 @@
-// My API key and base URL for TMDB
+// 🎬 AZHAN Movies Website JS
+
 const API_KEY = "63f568ca8b3bbb806284ff9e018bee43";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-// Getting important HTML elements from the page
 const searchInputs = [
   document.getElementById("search"),
-  document.getElementById("search-mobile"),
+  document.getElementById("search-mobile")
 ];
 const searchSection = document.getElementById("search-section");
 const searchResults = document.getElementById("search-results");
 const noResults = document.getElementById("no-results");
 const homepageSections = document.getElementById("homepage-sections");
 
-// All genre IDs mapped to names, I’ll use these for filter buttons
 const genresMap = {
-  28: "Action",
-  12: "Adventure",
-  16: "Animation",
-  35: "Comedy",
-  80: "Crime",
-  99: "Documentary",
-  18: "Drama",
-  10751: "Family",
-  14: "Fantasy",
-  36: "History",
-  27: "Horror",
-  10402: "Music",
-  9648: "Mystery",
-  10749: "Romance",
-  878: "Science Fiction",
-  10770: "TV Movie",
-  53: "Thriller",
-  10752: "War",
-  37: "Western",
+  28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime",
+  99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History",
+  27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance",
+  878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western"
 };
 
-// Making genre buttons show up
+// Render Genre Dropdown
 function renderGenreDropdown() {
   const genreSelect = document.getElementById("genre-select");
-  genreSelect.innerHTML = '<option value="all">All Genres</option>'; // default
+  if (!genreSelect) return;
 
+  genreSelect.innerHTML = '<option value="all">All Genres</option>';
   for (let id in genresMap) {
     const option = document.createElement("option");
     option.value = id;
@@ -47,52 +32,72 @@ function renderGenreDropdown() {
     genreSelect.appendChild(option);
   }
 }
-
-// Creating movie card for each movie
+// Create Movie Card (Compact Futuristic Design)
 function makeMovieCard(movie) {
   const poster = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : "https://via.placeholder.com/300x450?text=No+Image";
+    ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+    : "https://via.placeholder.com/200x300?text=No+Image";
 
+  // Card wrapper
   const card = document.createElement("div");
   card.className =
-    "glass w-[250px] min-w-[250px] rounded-xl overflow-hidden transition hover:scale-105 snap-center flex-shrink-0";
+    "relative w-[160px] h-[240px] min-w-[160px] rounded-xl overflow-hidden shadow-md bg-gray-900/80 border border-gray-700 hover:border-pink-500 transition transform hover:scale-105 snap-center flex-shrink-0 group";
   card.setAttribute("data-genres", movie.genre_ids?.join(",") || "");
 
-  card.innerHTML = `
-    <img src="${poster}" alt="${
-    movie.title
-  }" class="w-full h-[370px] object-cover" />
-    <div class="p-4 flex flex-col gap-2 text-white">
-      <h2 class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text">${
-        movie.title
-      }</h2>
-      <div class="text-sm flex justify-between text-gray-400">
-        <span>${movie.release_date || "No date"}</span>
-        <span>⭐ ${movie.vote_average}</span>
-      </div>
-      <div class="flex gap-2 mt-2">
-        <button class="detail-btn flex-1 py-2 bg-gradient-to-r from-fuchsia-600 to-pink-500 rounded-[10px]">Details</button>
-        <button class="watch-now-btn flex-1 py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-[10px]">Watch</button>
-        <button class="add-fav-btn flex-1 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-[10px]">❤️</button>
-      </div>
-    </div>
-  `;
+  // Poster
+  const img = document.createElement("img");
+  img.src = poster;
+  img.alt = movie.title;
+  img.className = "w-full h-full object-cover";
+  card.appendChild(img);
 
-  // Click on detail will go to detail page
-  card.querySelector(".detail-btn").addEventListener("click", () => {
+  // Overlay (appears on hover)
+  const overlay = document.createElement("div");
+  overlay.className =
+    "absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-100 flex flex-col justify-between p-3 transition";
+
+  // Title
+  const title = document.createElement("h2");
+  title.className =
+    "text-sm font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-400 truncate";
+  title.textContent = movie.title;
+  overlay.appendChild(title);
+
+  // Meta
+  const meta = document.createElement("p");
+  meta.className = "text-xs text-gray-400 text-center mt-1";
+  meta.textContent = `${movie.release_date ? movie.release_date.slice(0, 4) : "N/A"} • ⭐ ${movie.vote_average.toFixed(1)}`;
+  overlay.appendChild(meta);
+
+  // Buttons
+  const btns = document.createElement("div");
+  btns.className = "flex flex-col gap-2 mt-3";
+
+  const detailBtn = document.createElement("button");
+  detailBtn.className =
+    "py-1 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 text-xs font-semibold hover:from-pink-500 hover:to-purple-600 transition";
+  detailBtn.textContent = "Details";
+  detailBtn.addEventListener("click", () => {
     window.location.href = `movie.html?id=${movie.id}`;
   });
+  btns.appendChild(detailBtn);
 
-  // Click on watch goes to watch.html
-  card.querySelector(".watch-now-btn").addEventListener("click", () => {
+  const watchBtn = document.createElement("button");
+  watchBtn.className =
+    "py-1 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-xs font-semibold hover:from-emerald-600 hover:to-green-500 transition";
+  watchBtn.textContent = "Watch";
+  watchBtn.addEventListener("click", () => {
     window.location.href = `watch.html?id=${movie.id}`;
   });
+  btns.appendChild(watchBtn);
 
-  // Add to favorites, saves in localStorage
-  card.querySelector(".add-fav-btn").addEventListener("click", () => {
+  const favBtn = document.createElement("button");
+  favBtn.className =
+    "py-1 rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-xs font-semibold hover:from-orange-500 hover:to-yellow-400 transition";
+  favBtn.textContent = "❤️ Fav";
+  favBtn.addEventListener("click", () => {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    let alreadyAdded = favorites.some((fav) => fav.id === movie.id);
+    let alreadyAdded = favorites.some(fav => fav.id === movie.id);
 
     if (!alreadyAdded) {
       favorites.push(movie);
@@ -102,26 +107,33 @@ function makeMovieCard(movie) {
       alert("✅ Already in favorites!");
     }
   });
+  btns.appendChild(favBtn);
+
+  overlay.appendChild(btns);
+
+  card.appendChild(overlay);
 
   return card;
 }
 
-// Load a specific section like trending, popular etc
+// Load Section
 async function loadSection(containerId, endpoint) {
   const container = document.getElementById(containerId);
+  if (!container) return;
   container.innerHTML = "";
+
   try {
     const res = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}`);
     const data = await res.json();
-    data.results.slice(0, 20).forEach((movie) => {
+    data.results.slice(0, 20).forEach(movie => {
       container.appendChild(makeMovieCard(movie));
     });
-  } catch (e) {
-    console.error("Error loading", endpoint, e);
+  } catch (err) {
+    console.error("Error loading", endpoint, err);
   }
 }
 
-// Search movies and group them by language
+// Search Movies
 async function searchMovies(query) {
   if (!query) {
     searchSection.classList.add("hidden");
@@ -131,9 +143,7 @@ async function searchMovies(query) {
 
   try {
     const res = await fetch(
-      `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
-        query
-      )}`
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
     );
     const data = await res.json();
 
@@ -147,10 +157,8 @@ async function searchMovies(query) {
       return;
     }
 
-    // Group movies by language
     const groups = { en: [], hi: [], ur: [], ja: [], other: [] };
-
-    data.results.forEach((movie) => {
+    data.results.forEach(movie => {
       const lang = movie.original_language;
       if (lang === "en") groups.en.push(movie);
       else if (lang === "hi") groups.hi.push(movie);
@@ -164,10 +172,9 @@ async function searchMovies(query) {
       hi: "🎬 Bollywood Movies",
       ur: "🎬 Pakistani Movies",
       ja: "🎬 Anime",
-      other: "🎬 Other Languages",
+      other: "🎬 Other Languages"
     };
 
-    // Create section per language
     for (const lang in groups) {
       if (groups[lang].length > 0) {
         const title = document.createElement("h3");
@@ -179,9 +186,8 @@ async function searchMovies(query) {
         container.className =
           "flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory";
 
-        groups[lang].forEach((movie) => {
-          const card = makeMovieCard(movie);
-          container.appendChild(card);
+        groups[lang].forEach(movie => {
+          container.appendChild(makeMovieCard(movie));
         });
 
         searchResults.appendChild(container);
@@ -192,31 +198,27 @@ async function searchMovies(query) {
   }
 }
 
-// Apply saved theme (dark or light)
+// Theme
 function applySavedTheme() {
   if (localStorage.getItem("theme") === "light") {
     document.body.classList.add("light-mode");
   }
 }
-
-// Toggle between light and dark theme
 function toggleTheme() {
   document.body.classList.toggle("light-mode");
   const isLight = document.body.classList.contains("light-mode");
   localStorage.setItem("theme", isLight ? "light" : "dark");
 }
 
-// Event listener for search inputs
-searchInputs.forEach((input) => {
-  input?.addEventListener("input", (e) => {
+// Event Listeners
+searchInputs.forEach(input => {
+  input?.addEventListener("input", e => {
     searchMovies(e.target.value.trim());
   });
 });
-
-// Genre filter logic
-document.getElementById("genre-select")?.addEventListener("change", (e) => {
+document.getElementById("genre-select")?.addEventListener("change", e => {
   const selectedGenre = e.target.value;
-  document.querySelectorAll(".glass[data-genres]").forEach((card) => {
+  document.querySelectorAll("[data-genres]").forEach(card => {
     const genres = card.getAttribute("data-genres")?.split(",") || [];
     card.style.display =
       selectedGenre === "all" || genres.includes(selectedGenre)
@@ -224,16 +226,12 @@ document.getElementById("genre-select")?.addEventListener("change", (e) => {
         : "none";
   });
 });
-
-// For mobile menu toggle
 document.getElementById("menu-toggle")?.addEventListener("click", () => {
   document.getElementById("dropdown-menu").classList.toggle("hidden");
 });
-
-// For dark/light mode button
 document.getElementById("mode-toggle")?.addEventListener("click", toggleTheme);
 
-// Run everything when page loads
+// Init
 window.addEventListener("DOMContentLoaded", () => {
   applySavedTheme();
   renderGenreDropdown();
