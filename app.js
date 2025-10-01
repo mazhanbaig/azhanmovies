@@ -41,7 +41,7 @@ function makeMovieCard(movie) {
   // Card wrapper
   const card = document.createElement("div");
   card.className =
-    "relative w-[160px] h-[240px] min-w-[160px] rounded-xl overflow-hidden shadow-md bg-gray-900/80 border border-gray-700 hover:border-pink-500 transition transform hover:scale-105 snap-center flex-shrink-0 group";
+    "relative w-[160px] h-[240px] min-w-[160px] rounded-md overflow-hidden shadow-md bg-gray-900/80 border border-gray-700 hover:border-pink-500 transition transform hover:scale-105 snap-center flex-shrink-0 group";
   card.setAttribute("data-genres", movie.genre_ids?.join(",") || "");
 
   // Poster

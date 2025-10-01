@@ -1,23 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AZHAN Movie | Detail</title>
+
+    <!-- Tailwind CSS -->
     <link href="src/output.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <style>
+        /* -------------------------------
+       GLOBAL BACKGROUNDS & EFFECTS
+    --------------------------------*/
+
+        /* Dark mode gradient */
         body {
             background: linear-gradient(145deg, #020617, #0f172a);
         }
 
+        /* Light mode background */
         body.light-mode {
             background: #fdfdfd !important;
             color: #111 !important;
         }
 
+        /* Hide scrollbar for clean look */
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
@@ -27,6 +36,7 @@
             scrollbar-width: none;
         }
 
+        /* Moving glowing background effect */
         body::before {
             content: "";
             position: fixed;
@@ -52,6 +62,7 @@
             }
         }
 
+        /* Neon text gradient */
         .neon {
             background-image: linear-gradient(to right, #00e0ff, #ff00c8);
             -webkit-background-clip: text;
@@ -64,7 +75,7 @@
         }
 
         body.light-mode .bg-\[\#0f172a\]\/80 {
-            background-color: #ffffff !important;
+            background-color: #fff !important;
             border-color: #ccc !important;
         }
 
@@ -115,6 +126,7 @@
             background-color: #e91e63 !important;
         }
 
+        /* Theme toggle button */
         .theme-toggle {
             position: fixed;
             top: 1rem;
@@ -130,23 +142,32 @@
         }
 
         body.light-mode .theme-toggle {
-            background: #ffffff;
+            background: #fff;
             color: #000;
             border-color: #aaa;
         }
     </style>
 </head>
 
-<body class="font-sans min-h-screen p-4 md:p-6 text-white">
-    <!-- Theme Toggle Button -->
+<body class="font-sans min-h-screen px-4 md:px-6 text-white">
+
+    <!-- 🌗 Theme Toggle Button -->
     <button class="theme-toggle" onclick="toggleTheme()">🌗 Toggle Theme</button>
 
-    <!-- Movie Info Section -->
-    <section id="movie-detail"
-        class="w-full max-w-screen-lg mx-auto bg-[#0f172a]/80 backdrop-blur-xl border border-cyan-400/10 shadow-xl rounded-2xl p-4 md:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 md:gap-8 items-start mb-10">
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 w-full shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
+            <a href="index.html" class="text-3xl font-extrabold neon">AZHAN Movies</a>
+        </div>
+    </nav>
+
+    <!-- 🎬 Movie Detail Section -->
+    <section id="movie-detail" class="w-full max-w-screen-lg mx-auto bg-[#0f172a]/80 backdrop-blur-xl 
+           border border-cyan-400/10 shadow-xl rounded-2xl p-4 md:p-8 lg:p-10 
+           grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 md:gap-8 items-start mb-10">
     </section>
 
-    <!-- Cast Section -->
+    <!-- 👥 Cast Section -->
     <section class="max-w-screen-lg mx-auto">
         <h2
             class="text-xl md:text-2xl font-bold mb-4 bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-transparent bg-clip-text">
@@ -154,30 +175,124 @@
         </h2>
         <div id="cast-section" class="flex overflow-x-auto gap-3 pb-3 scrollbar-hide"></div>
     </section>
+    <!-- 🌟 Final Futuristic Footer -->
+    <footer class="bg-black text-gray-300 mt-20 relative overflow-hidden">
+
+        <!-- Background Accent Glow -->
+        <div class="absolute inset-0 opacity-10 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 blur-3xl">
+        </div>
+
+        <!-- Top Strip -->
+        <div
+            class="relative z-10 border-b border-gray-800 py-6 flex flex-col md:flex-row items-center justify-between gap-4 px-6 max-w-7xl mx-auto">
+            <h2 class="text-2xl font-extrabold tracking-wide text-white">
+                <a href="index.html" class="text-lg sm:text-2xl md:text-3xl font-extrabold neon">AZHAN Movies</a>
+            </h2>
+            <nav class="flex gap-6 text-sm">
+                <a href="index.html" class="hover:text-cyan-400 transition">Home</a>
+                <a href="movie.html" class="hover:text-cyan-400 transition">Movies</a>
+                <a href="watch.html" class="hover:text-cyan-400 transition">Watch</a>
+                <a href="#" class="hover:text-cyan-400 transition">Contact</a>
+            </nav>
+        </div>
+
+        <!-- Middle Strip (3 Columns) -->
+        <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-10 py-12 px-6 max-w-7xl mx-auto">
+
+            <!-- About -->
+            <div>
+                <h3 class="text-white font-semibold mb-3">About Us</h3>
+                <p class="text-sm text-gray-400 leading-relaxed">
+                    AZHAN Movies is your futuristic movie hub. Explore trending, popular, and the latest releases from
+                    Hollywood, Bollywood, Pakistani cinema, and Anime — all in one place.
+                </p>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3 class="text-white font-semibold mb-3">Categories</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-cyan-400 transition">Hollywood</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Bollywood</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Pakistani</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Anime</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 class="text-white font-semibold mb-3">Stay Updated</h3>
+                <p class="text-sm text-gray-400 mb-3">Subscribe for the latest movie updates.</p>
+                <form class="flex">
+                    <input type="email" placeholder="Enter your email"
+                        class="w-full px-3 py-2 rounded-l-lg bg-gray-800 text-sm focus:outline-none focus:ring-1 focus:ring-cyan-400">
+                    <button
+                        class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-pink-500 text-white text-sm rounded-r-lg hover:opacity-90">Join</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="relative z-10 flex justify-center space-x-6 py-4">
+            <a href="#" class="hover:text-cyan-400 transition">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="hover:text-cyan-400 transition">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="hover:text-cyan-400 transition">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="hover:text-cyan-400 transition">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+        <!-- Bottom Strip -->
+        <div class="relative z-10 border-t border-gray-800 py-4 text-center text-xs text-gray-500">
+            © 2025 <span class="text-white font-semibold">AZHAN Movies</span> • Designed with ❤️ for movie lovers
+        </div>
+    </footer>
+
+    <!-- Font Awesome for Social Icons -->
+    <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+
 
     <script>
+        // ----------------------------
+        // GLOBAL VARIABLES
+        // ----------------------------
         const API_KEY = '63f568ca8b3bbb806284ff9e018bee43';
         const BASE_URL = 'https://api.themoviedb.org/3';
         const params = new URLSearchParams(window.location.search);
         const movieId = params.get("id");
 
+        // ----------------------------
+        // FETCH MOVIE DETAILS
+        // ----------------------------
         async function getMovieDetails(id) {
             const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
             const movie = await res.json();
 
+            // Poster fallback if missing
             const poster = movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                 : 'https://via.placeholder.com/300x450?text=No+Image';
 
+            // Genres as badges
             const genres = movie.genres.map(g =>
                 `<span class="bg-cyan-500/10 border border-cyan-400/20 px-3 py-1 rounded-full text-[10px] font-medium">${g.name}</span>`
             ).join(' ');
 
+            // Insert Movie Detail HTML
             const html = `
+        <!-- Poster -->
         <div class="w-full max-w-xs mx-auto md:mx-0">
-          <img src="${poster}" alt="${movie.title}" class="rounded-xl w-full border border-cyan-500/10 shadow" />
+          <img src="${poster}" alt="${movie.title}" 
+               class="rounded-xl w-full border border-cyan-500/10 shadow" />
         </div>
 
+        <!-- Info -->
         <div class="space-y-4 text-sm max-w-prose">
           <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-transparent bg-clip-text">
             ${movie.title}
@@ -187,12 +302,14 @@
 
           <div class="flex flex-wrap gap-2 mt-1">${genres}</div>
 
+          <!-- Extra Info -->
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-gray-400 pt-2">
             <div><span class="text-cyan-400">Release:</span> ${movie.release_date || "N/A"}</div>
             <div><span class="text-cyan-400">Rating:</span> ⭐ ${movie.vote_average || "N/A"}</div>
             <div><span class="text-cyan-400">Language:</span> ${movie.original_language.toUpperCase()}</div>
           </div>
 
+          <!-- Action Buttons -->
           <div class="flex flex-wrap gap-3 pt-4">
             <a href="index.html"
               class="px-6 py-2 text-sm font-semibold rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white shadow hover:scale-105 transition">
@@ -205,13 +322,17 @@
           </div>
         </div>
       `;
-
             document.getElementById("movie-detail").innerHTML = html;
         }
 
+        // ----------------------------
+        // FETCH CAST MEMBERS
+        // ----------------------------
         async function getMovieCast(id) {
             const res = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`);
             const data = await res.json();
+
+            // Show top 15 cast
             const cast = data.cast.slice(0, 15);
 
             const castHTML = cast.map(actor => {
@@ -220,29 +341,33 @@
                     : 'https://via.placeholder.com/150x225?text=No+Image';
 
                 return `
-          <div class="flex-shrink-0 w-[90px] bg-[#1e293b]/40 backdrop-blur-md rounded-lg p-2 text-center border border-cyan-500/10 hover:shadow-cyan-500/10 transition shadow">
-            <img src="${profile}" alt="${actor.name}" class="rounded-md w-full h-[130px] object-cover mb-1 border border-cyan-400/10" />
+          <div class="flex-shrink-0 w-[90px] bg-[#1e293b]/40 rounded-lg p-2 text-center border border-cyan-500/10 shadow hover:shadow-cyan-500/10 transition">
+            <img src="${profile}" alt="${actor.name}" 
+                 class="rounded-md w-full h-[130px] object-cover mb-1 border border-cyan-400/10" />
             <p class="text-[11px] font-medium text-cyan-100 truncate">${actor.name}</p>
             <p class="text-[10px] text-gray-400 truncate">${actor.character}</p>
           </div>
         `;
             }).join('');
-
             document.getElementById("cast-section").innerHTML = castHTML;
         }
 
-        // Theme toggling logic
+        // ----------------------------
+        // THEME TOGGLE FUNCTION
+        // ----------------------------
         function toggleTheme() {
             const light = document.body.classList.toggle("light-mode");
             localStorage.setItem("theme", light ? "light" : "dark");
         }
 
-        // Apply saved theme on load
+        // Apply saved theme when page loads
         if (localStorage.getItem("theme") === "light") {
             document.body.classList.add("light-mode");
         }
 
-        // Load data
+        // ----------------------------
+        // LOAD MOVIE DATA ON PAGE
+        // ----------------------------
         if (movieId) {
             getMovieDetails(movieId);
             getMovieCast(movieId);
