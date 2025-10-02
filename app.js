@@ -32,50 +32,51 @@ function renderGenreDropdown() {
     genreSelect.appendChild(option);
   }
 }
-// Create Movie Card (Compact Futuristic Design)
+/// 🎬 The Ultimate Netflix-Style Movie Card (Responsive, Cinematic, Best Ever)
 function makeMovieCard(movie) {
-  const poster = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-    : "https://via.placeholder.com/200x300?text=No+Image";
+  const poster = movie.backdrop_path
+    ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` // widescreen backdrop
+    : movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+      : "https://via.placeholder.com/640x360?text=No+Image";
 
   // Card wrapper
   const card = document.createElement("div");
   card.className =
-    "relative w-[160px] h-[240px] min-w-[160px] rounded-md overflow-hidden shadow-md bg-gray-900/80 border border-gray-700 hover:border-pink-500 transition transform hover:scale-105 snap-center flex-shrink-0 group";
-  card.setAttribute("data-genres", movie.genre_ids?.join(",") || "");
+    "poster-card relative sm:w-[220px] md:w-[280px] lg:w-[320px] aspect-video rounded-xl overflow-hidden cursor-pointer transition transform hover:scale-110 hover:shadow-2xl bg-gray-900 flex-shrink-0 group";
+  // ✅ Responsive width + cinematic ratio + smooth hover
 
   // Poster
   const img = document.createElement("img");
   img.src = poster;
   img.alt = movie.title;
-  img.className = "w-full h-full object-cover";
+  img.className = "w-full h-full object-cover transition duration-500 group-hover:brightness-75";
   card.appendChild(img);
 
-  // Overlay (appears on hover)
+  // Overlay
   const overlay = document.createElement("div");
   overlay.className =
-    "absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-100 flex flex-col justify-between p-3 transition";
+    "absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex flex-col justify-end p-4";
 
   // Title
   const title = document.createElement("h2");
-  title.className =
-    "text-sm font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-400 truncate";
+  title.className = "text-lg font-bold text-white truncate";
   title.textContent = movie.title;
   overlay.appendChild(title);
 
-  // Meta
+  // Meta info
   const meta = document.createElement("p");
-  meta.className = "text-xs text-gray-400 text-center mt-1";
+  meta.className = "text-xs text-gray-300 mt-1";
   meta.textContent = `${movie.release_date ? movie.release_date.slice(0, 4) : "N/A"} • ⭐ ${movie.vote_average.toFixed(1)}`;
   overlay.appendChild(meta);
 
   // Buttons
   const btns = document.createElement("div");
-  btns.className = "flex flex-col gap-2 mt-3";
+  btns.className = "flex gap-2 mt-3";
 
   const detailBtn = document.createElement("button");
   detailBtn.className =
-    "py-1 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 text-xs font-semibold hover:from-pink-500 hover:to-purple-600 transition";
+    "px-3 py-1 rounded-md bg-white/20 hover:bg-red-600 text-xs font-semibold transition";
   detailBtn.textContent = "Details";
   detailBtn.addEventListener("click", () => {
     window.location.href = `movie.html?id=${movie.id}`;
@@ -84,7 +85,7 @@ function makeMovieCard(movie) {
 
   const watchBtn = document.createElement("button");
   watchBtn.className =
-    "py-1 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-xs font-semibold hover:from-emerald-600 hover:to-green-500 transition";
+    "px-3 py-1 rounded-md bg-white/20 hover:bg-green-600 text-xs font-semibold transition";
   watchBtn.textContent = "Watch";
   watchBtn.addEventListener("click", () => {
     window.location.href = `watch.html?id=${movie.id}`;
@@ -93,8 +94,8 @@ function makeMovieCard(movie) {
 
   const favBtn = document.createElement("button");
   favBtn.className =
-    "py-1 rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-xs font-semibold hover:from-orange-500 hover:to-yellow-400 transition";
-  favBtn.textContent = "❤️ Fav";
+    "px-3 py-1 rounded-md bg-white/20 hover:bg-yellow-500 text-xs font-semibold transition";
+  favBtn.textContent = "  Fav  ";
   favBtn.addEventListener("click", () => {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     let alreadyAdded = favorites.some(fav => fav.id === movie.id);
@@ -110,7 +111,6 @@ function makeMovieCard(movie) {
   btns.appendChild(favBtn);
 
   overlay.appendChild(btns);
-
   card.appendChild(overlay);
 
   return card;
