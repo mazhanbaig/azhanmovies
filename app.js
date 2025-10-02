@@ -32,10 +32,9 @@ function renderGenreDropdown() {
     genreSelect.appendChild(option);
   }
 }
-/// 🎬 The Ultimate Netflix-Style Movie Card (Responsive, Cinematic, Best Ever)
 function makeMovieCard(movie) {
   const poster = movie.backdrop_path
-    ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` // widescreen backdrop
+    ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
     : movie.poster_path
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
       : "https://via.placeholder.com/640x360?text=No+Image";
@@ -43,14 +42,14 @@ function makeMovieCard(movie) {
   // Card wrapper
   const card = document.createElement("div");
   card.className =
-    "poster-card relative sm:w-[220px] md:w-[280px] lg:w-[320px] aspect-video rounded-xl overflow-hidden cursor-pointer transition transform hover:scale-110 hover:shadow-2xl bg-gray-900 flex-shrink-0 group";
-  // ✅ Responsive width + cinematic ratio + smooth hover
+    "poster-card relative w-full sm:w-[220px] md:w-[280px] lg:w-[320px] max-w-full aspect-video rounded-xl overflow-hidden cursor-pointer transition transform hover:scale-105 hover:shadow-2xl bg-gray-900 flex-shrink-0 group";
 
   // Poster
   const img = document.createElement("img");
   img.src = poster;
   img.alt = movie.title;
-  img.className = "w-full h-full object-cover transition duration-500 group-hover:brightness-75";
+  img.className =
+    "w-full h-full object-cover transition duration-500 group-hover:brightness-75";
   card.appendChild(img);
 
   // Overlay
@@ -60,43 +59,39 @@ function makeMovieCard(movie) {
 
   // Title
   const title = document.createElement("h2");
-  title.className = "text-lg font-bold text-white truncate";
+  title.className =
+    "text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white truncate";
   title.textContent = movie.title;
   overlay.appendChild(title);
 
   // Meta info
   const meta = document.createElement("p");
-  meta.className = "text-xs text-gray-300 mt-1";
+  meta.className = "text-xs sm:text-sm text-gray-300 mt-1";
   meta.textContent = `${movie.release_date ? movie.release_date.slice(0, 4) : "N/A"} • ⭐ ${movie.vote_average.toFixed(1)}`;
   overlay.appendChild(meta);
 
   // Buttons
   const btns = document.createElement("div");
-  btns.className = "flex gap-2 mt-3";
+  btns.className = "flex gap-2 mt-3 flex-wrap";
 
-  const detailBtn = document.createElement("button");
-  detailBtn.className =
-    "px-3 py-1 rounded-md bg-white/20 hover:bg-red-600 text-xs font-semibold transition";
-  detailBtn.textContent = "Details";
-  detailBtn.addEventListener("click", () => {
+  const createButton = (text, bgHover, onClick) => {
+    const btn = document.createElement("button");
+    btn.className =
+      `px-3 py-1 rounded-md bg-white/20 hover:${bgHover} text-xs sm:text-sm font-semibold transition`;
+    btn.textContent = text;
+    btn.addEventListener("click", onClick);
+    return btn;
+  };
+
+  const detailBtn = createButton("Details", "bg-red-600", () => {
     window.location.href = `movie.html?id=${movie.id}`;
   });
-  btns.appendChild(detailBtn);
 
-  const watchBtn = document.createElement("button");
-  watchBtn.className =
-    "px-3 py-1 rounded-md bg-white/20 hover:bg-green-600 text-xs font-semibold transition";
-  watchBtn.textContent = "Watch";
-  watchBtn.addEventListener("click", () => {
+  const watchBtn = createButton("Watch", "bg-green-600", () => {
     window.location.href = `watch.html?id=${movie.id}`;
   });
-  btns.appendChild(watchBtn);
 
-  const favBtn = document.createElement("button");
-  favBtn.className =
-    "px-3 py-1 rounded-md bg-white/20 hover:bg-yellow-500 text-xs font-semibold transition";
-  favBtn.textContent = "  Fav  ";
-  favBtn.addEventListener("click", () => {
+  const favBtn = createButton("Fav", "bg-yellow-500", () => {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     let alreadyAdded = favorites.some(fav => fav.id === movie.id);
 
@@ -108,6 +103,9 @@ function makeMovieCard(movie) {
       alert("✅ Already in favorites!");
     }
   });
+
+  btns.appendChild(detailBtn);
+  btns.appendChild(watchBtn);
   btns.appendChild(favBtn);
 
   overlay.appendChild(btns);
@@ -115,6 +113,7 @@ function makeMovieCard(movie) {
 
   return card;
 }
+
 
 // Load Section
 async function loadSection(containerId, endpoint) {
